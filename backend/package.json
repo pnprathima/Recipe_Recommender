@@ -8,7 +8,8 @@
     "test": "set CI=true && jest",
     "lint": "eslint 'dao/**.js'",
     "format": "prettier --check ./dao",
-    "format:fix": "prettier --write ./dao"
+    "format:fix": "prettier --write ./dao",
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
