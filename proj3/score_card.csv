@@ -115,13 +115,13 @@ Do you have a contributions policy?,Yes,https://github.com/pnprathima/Recipe_Rec
 Is your contributions' policy publicly available?,Yes,,
 Do contributors keep the copyright/IP of their contributions?,No,https://github.com/pnprathima/Recipe_Recommender/blob/master/LICENSE,License mentions that the copyright belongs to creator
 Does your website and documentation clearly state the copyright owners of your software and documentation?,Yes,https://github.com/pnprathima/Recipe_Recommender/blob/master/LICENSE,
-Does each of your source code files include a copyright statement?,yes,https://github.com/pnprathima/Recipe_Recommender/blob/master/Code/frontend/src/components/SearchByRecipe.js,We have added it to the files modified in proj3
+Does each of your source code files include a copyright statement?,yes,https://github.com/pnprathima/Recipe_Recommender/blob/master/frontend/src/components/SearchByRecipe.js,We have added it to the files modified in proj3
 ,,,
 Q15 - Your software's copyright and licensing,,,
 Does your website and documentation clearly state the licence of your software?,Yes,https://github.com/pnprathima/Recipe_Recommender/blob/master/LICENSE,
 Is your software released under an open source licence?,Yes,,MIT License
 Is your software released under an OSI-approved open-source licence?,Yes,,
-Does each of your source code files include a licence header?,Yes,https://github.com/pnprathima/Recipe_Recommender/blob/master/Code/frontend/src/components/SearchByRecipe.js,We have added it to the files modified in proj3
+Does each of your source code files include a licence header?,Yes,https://github.com/pnprathima/Recipe_Recommender/blob/master/frontend/src/components/SearchByRecipe.js,We have added it to the files modified in proj3
 Do you have a recommended citation for your software?,Yes,https://github.com/pnprathima/Recipe_Recommender/blob/master/CITATION.md,
 ,,,
 Q16 - Your plans for the future,,,

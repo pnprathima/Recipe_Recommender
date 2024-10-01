@@ -14,9 +14,9 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install packages
         run: |
-            cd Code/backend
+            cd backend
             npm install
       - name: Code Formatter
         run: |
-            cd Code/backend
+            cd backend
             npm run format
