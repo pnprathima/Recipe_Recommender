@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { Avatar, Flex, Modal, ModalBody, ModalCloseButton, ModalOverlay, ModalHeader, ModalFooter, ModalContent, Box, SimpleGrid, Text, Button } from "@chakra-ui/react"
 import RecipeCard from "./RecipeCard";
 import Rating from "./Rating";
+import RateRecipe from "./RateRecipe";
 
 // component to handle all the recipes
-const RecipeList = ({ recipes }) => {
+const RecipeList = ({ recipes, refresh, searchName }) => {
   // mapping each recipe item to the Recipe container
   // const renderedRecipes = recipes.map((recipe) => {
   //   // return <Recipe key={recipe._id} recipe={recipe} />;
@@ -15,6 +16,7 @@ const RecipeList = ({ recipes }) => {
   console.log(recipes)
   const [isOpen, setIsOpen] = useState(false);
   const [currentRecipe, setCurrentRecipe] = useState({});
+  const [isChange, setIsChange] = useState(false);
   var youtube_videos =
     "https://www.youtube.com/results?search_query=" +
     currentRecipe["TranslatedRecipeName"];
@@ -25,6 +27,11 @@ const RecipeList = ({ recipes }) => {
   }
   const onClose = () => {
     setIsOpen(false)
+    setCurrentRecipe({})
+    if(isChange) {
+      refresh(searchName)
+    }
+    
   }
   // all the recipes are being returned in the form of a table
   return (
@@ -55,9 +62,11 @@ const RecipeList = ({ recipes }) => {
             </Flex>
             <Text><Text as={"b"}>Instructions: </Text> {currentRecipe["TranslatedInstructions"]}</Text>
             <Text color={"blue"}><Text color={"black"}  as={"b"}>Video Url: </Text><a href={youtube_videos}>Youtube</a></Text>
+            
           </ModalBody>
 
           <ModalFooter>
+            <RateRecipe recipe={currentRecipe} setChange={setIsChange}></RateRecipe>
             <Button colorScheme='teal' mr={3} onClick={onClose}>
               Close
             </Button>
