@@ -118,6 +118,17 @@ export default class RecipesController {
     }
   }
 
+  static async apiPatchRecipeRating(req, res, next) {
+    try {
+      console.log(req.body)
+      let response = await RecipesDAO.rateRecipe(req.body)
+      res.json(response)
+    } catch (e) {
+      console.log(`api, ${e}`);
+      res.status(500).json({ error: e });
+    }
+  }
+
   static async apiGetIngredients(req, res, next) {
     try {
       let ingredients = await RecipesDAO.getIngredients();

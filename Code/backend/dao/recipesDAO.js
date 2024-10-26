@@ -215,6 +215,7 @@ export default class RecipesDAO {
     inputRecipe["TotalTimeInMins"] = recipe["cookingTime"];
     inputRecipe["Diet-type"] = recipe["dietType"];
     inputRecipe["Recipe-rating"] = recipe["recipeRating"];
+    inputRecipe["Times-rated"] = 1
     inputRecipe["Cuisine"] = recipe["cuisine"];
     inputRecipe["image-url"] = recipe["imageURL"];
     inputRecipe["URL"] = recipe["recipeURL"];
@@ -242,6 +243,17 @@ export default class RecipesDAO {
       console.error(`Unable to add recipe, ${e}`);
       return response;
     }
+  }
+
+  static async rateRecipe(ratingBody) {
+    let r = await recipes.find({_id: new ObjectId(ratingBody.recipeID)}).collation({ locale: "en", strength: 2 }).toArray();
+    let recipe = r[0]
+    let timesRated = recipe["Times-rated"] ? Number(recipe["Times-rated"]) : 1
+    let newRating = Number(recipe["Recipe-rating"]) * timesRated
+    newRating += ratingBody.rating
+    timesRated++
+    newRating /= timesRated
+    await recipes.updateOne({_id:  new ObjectId(ratingBody.recipeID)}, {$set: {'Times-rated': timesRated, 'Recipe-rating': newRating}})
   }
 
     //function to add recipe to user profile

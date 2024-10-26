@@ -22,4 +22,6 @@ router.route("/addRecipeToProfile").post(RecipesCtrl.apiPostRecipeToProfile);
 
 router.route("/getRecipeByName").get(RecipesCtrl.apiGetRecipeByName);
 
+router.route("/rateRecipe").patch(RecipesCtrl.apiPatchRecipeRating)
+
 export default router;

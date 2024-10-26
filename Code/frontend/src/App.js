@@ -25,6 +25,7 @@ class App extends Component {
       ingredients: new Set(),
       recipeList: [],
       recipeByNameList: [],
+      searchName: "",
       email: "",
       flag: false,
       isLoading: false,
@@ -120,6 +121,7 @@ class App extends Component {
   handleRecipesByName = (recipeName) => {
     this.setState({
       isLoading: true,
+      searchName: recipeName
     });
     recipeDB
       .get("/recipes/getRecipeByName", {
@@ -206,7 +208,7 @@ class App extends Component {
                     {this.state.isLoading ? (
                       <RecipeLoading />
                     ) : (
-                      <RecipeList recipes={this.state.recipeByNameList} />
+                      <RecipeList recipes={this.state.recipeByNameList} refresh={this.handleRecipesByName} searchName={this.state.searchName}/>
                     )}
                   </TabPanel>
                 </TabPanels>
