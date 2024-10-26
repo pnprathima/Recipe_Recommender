@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, SimpleGrid, Card, CardHeader, Heading, Text, CardBody, CardFooter, Button, Image, Tag } from "@chakra-ui/react"
 import recipeDB from "../apis/recipeDB";
+import Rating from "./Rating";
 
 
 const RecipeCard = (props) => {
@@ -29,7 +30,10 @@ const RecipeCard = (props) => {
                 </CardHeader>
                 <CardBody>
                     <Text data-testid="time">Cooking Time: {props.recipe.TotalTimeInMins} mins</Text>
-                    <Text data-testid="rating">Rating: {props.recipe['Recipe-rating']}</Text>
+                    <Box display="flex" flexDirection="row" alignItems="center">
+                        <Text data-testid="rating">Rating: </Text>
+                        <Rating rating={props.recipe['Recipe-rating']}></Rating> 
+                    </Box>
                     <Text data-testid="diet">Diet Type: {props.recipe['Diet-type']}</Text>
                     <Tag onClick={handleSave} _hover={{bg: "white"}} ml={"160px"} bg={"gray.300"}>save recipe</Tag>
                 </CardBody>

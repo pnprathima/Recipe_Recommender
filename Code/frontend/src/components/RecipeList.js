@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Avatar, Flex, Modal, ModalBody, ModalCloseButton, ModalOverlay, ModalHeader, ModalFooter, ModalContent, Box, SimpleGrid, Text, Button } from "@chakra-ui/react"
 import RecipeCard from "./RecipeCard";
+import Rating from "./Rating";
 
 // component to handle all the recipes
 const RecipeList = ({ recipes }) => {
@@ -45,7 +46,10 @@ const RecipeList = ({ recipes }) => {
             <Avatar size="2xl" mr={2} mb={2} src={currentRecipe["image-url"]} />
               <Box mt={4}>
                 <Text><Text as={"b"}>Cooking Time: </Text>{currentRecipe.TotalTimeInMins} mins</Text>
-                <Text><Text as={"b"}>Rating: </Text> {currentRecipe['Recipe-rating']}</Text>
+                <Box display="flex" flexDirection="row" alignItems="center" maxHeight="30px" maxWidth={"30%"}>
+                  <Text as={"b"}>Rating: </Text>
+                  <Rating rating={currentRecipe['Recipe-rating']}></Rating> 
+                </Box>
                 <Text mb={2}><Text as={"b"}>Diet Type: </Text> {currentRecipe['Diet-type']}</Text>
               </Box>
             </Flex>
