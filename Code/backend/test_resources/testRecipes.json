@@ -1,0 +1,32 @@
+{
+    "recipes": [
+        {
+            "TranslatedRecipeName": "BLT",
+            "TotalTimeInMins": "15",
+            "Diet-type": "",
+            "Recipe-rating": 5,
+            "Times-rated": 1,
+            "Cuisine": "",
+            "image-url": "",
+            "URL": "",
+            "TranslatedInstructions": "Cook sandwich",
+            "Cleaned-Ingredients": "Bacon%Lettuce%Tomato%Bread%",
+            "Restaurant": "",
+            "Restaurant-Location": ""
+        },
+        {
+            "TranslatedRecipeName": "Andhra",
+            "TotalTimeInMins": "20",
+            "Diet-type": "Vegetarian",
+            "Recipe-rating": 5,
+            "Times-rated": 1,
+            "Cuisine": "Indian",
+            "image-url": "",
+            "URL": "",
+            "TranslatedInstructions": "Cook the food",
+            "Cleaned-Ingredients": "Mango%Rice%",
+            "Restaurant": "",
+            "Restaurant-Location": ""
+        }
+    ]
+}
