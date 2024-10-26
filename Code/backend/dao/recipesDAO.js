@@ -246,15 +246,14 @@ export default class RecipesDAO {
   }
 
   static async rateRecipe(ratingBody) {
-    //console.log("Inside rateRecipe")
-    let r = await recipes.find({_id: ratingBody.recipeID}).collation({ locale: "en", strength: 2 }).toArray();
+    let r = await recipes.find({_id: new ObjectId(ratingBody.recipeID)}).collation({ locale: "en", strength: 2 }).toArray();
     let recipe = r[0]
     let timesRated = recipe["Times-rated"] ? Number(recipe["Times-rated"]) : 1
     let newRating = Number(recipe["Recipe-rating"]) * timesRated
     newRating += ratingBody.rating
     timesRated++
     newRating /= timesRated
-    await recipes.updateOne({_id: recipeID}, {$set: {'Times-rated': timesRated, 'Recipe-rating': newRating}})
+    await recipes.updateOne({_id:  new ObjectId(ratingBody.recipeID)}, {$set: {'Times-rated': timesRated, 'Recipe-rating': newRating}})
   }
 
     //function to add recipe to user profile
