@@ -271,6 +271,19 @@ export default class RecipesDAO {
         console.log(`Unable to add recipe, ${e}`)
       }
     }
+
+  static async addRecipeToMealPlan(userName, recipeID, weekDay) {
+    let response;
+    try {
+      let updateBody = JSON.parse('{ "meal-plan.' + weekDay + '": "' + recipeID + '" }')
+      response = await users.updateOne(
+        { userName: userName },
+        { $set: updateBody })
+        return response
+    } catch (e) {
+      console.log(`Unable to add recipe to meal plan, ${e}`)
+    }
+  }
     
   static async getIngredients(){
     let response = {};
