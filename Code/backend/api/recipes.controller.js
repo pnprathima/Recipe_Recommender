@@ -2,56 +2,67 @@ import RecipesDAO from "../dao/recipesDAO.js";
 
 export default class RecipesController {
   static async apiAuthLogin(req, res) {
-    let filters = {}
-    filters.userName = req.query.userName
-    filters.password = req.query.password
+    let filters = {};
+    filters.userName = req.query.userName;
+    filters.password = req.query.password;
     const { success, user } = await RecipesDAO.getUser({
-      filters
-    })
+      filters,
+    });
     res.json({ success, user });
   }
   static async apiAuthSignup(req, res) {
     if (req.body) {
-      let data = {}
-      data.userName = req.body.userName
-      data.password = req.body.password
+      let data = {};
+      data.userName = req.body.userName;
+      data.password = req.body.password;
       const { success, user } = await RecipesDAO.addUser({
-        data
-      })
+        data,
+      });
       res.json({ success, user });
     }
   }
 
   static async apiGetBookmarks(req, res) {
     if (req.query.userName) {
-      const bookmarks = await RecipesDAO.getBookmarks(req.query.userName)
-      console.log(bookmarks)
+      const bookmarks = await RecipesDAO.getBookmarks(req.query.userName);
+      console.log(bookmarks);
       res.json({ bookmarks });
     } else {
-      res.json("Username not given")
+      res.json("Username not given");
     }
   }
 
   static async apiPostRecipeToProfile(req, res) {
-    if (req.body) {
-      const { userName, recipe } = req.body;
-      try {
-        const response = RecipesDAO.addRecipeToProfile(userName, recipe)
-        res.json(response)
-      } catch (e) {
-        console.log(`error: ${e}`)
-      }
+    console.log("Received request to add recipe to profile");
+    console.log("Request body:", JSON.stringify(req.body, null, 2));
 
-    } else {
-      res.json({ success: false })
+    const { userName, recipe } = req.body;
+
+    if (!userName || !recipe) {
+      console.log("Missing userName or recipe in request");
+      return res
+        .status(400)
+        .json({ success: false, message: "Missing userName or recipe" });
     }
 
+    try {
+      const result = await RecipesDAO.addRecipeToProfile(userName, recipe);
+      console.log("Result of adding recipe:", result);
+      res.json(result);
+    } catch (e) {
+      console.error("Error in apiPostRecipeToProfile:", e);
+      res.status(500).json({
+        success: false,
+        message: "Internal server error",
+        error: e.message,
+      });
+    }
   }
-  
+
   static async apiGetRecipeByName(req, res) {
     let filters = {};
     //Checking the query to find the required results
-    console.log(req.query)
+    console.log(req.query);
     if (req.query.recipeName) {
       filters.recipeName = req.query.recipeName;
     }
@@ -61,7 +72,7 @@ export default class RecipesController {
     });
 
     let response = {
-      recipes: recipesList
+      recipes: recipesList,
     };
     res.json(response);
   }
@@ -112,7 +123,7 @@ export default class RecipesController {
     try {
       let response = await RecipesDAO.addRecipe(req.body);
       res.json(response);
-    } catch(e) {
+    } catch (e) {
       console.log(`api, ${e}`);
       res.status(500).json({ error: e });
     }
@@ -120,9 +131,9 @@ export default class RecipesController {
 
   static async apiPatchRecipeRating(req, res, next) {
     try {
-      console.log(req.body)
-      let response = await RecipesDAO.rateRecipe(req.body)
-      res.json(response)
+      console.log(req.body);
+      let response = await RecipesDAO.rateRecipe(req.body);
+      res.json(response);
     } catch (e) {
       console.log(`api, ${e}`);
       res.status(500).json({ error: e });
@@ -133,10 +144,8 @@ export default class RecipesController {
     try {
       let ingredients = await RecipesDAO.getIngredients();
       res.json(ingredients);
-    } catch(e) {
+    } catch (e) {
       res.status(500).json({ error: e });
     }
   }
 }
-
-
