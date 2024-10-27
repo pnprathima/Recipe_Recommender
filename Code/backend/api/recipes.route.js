@@ -24,6 +24,6 @@ router.route("/getRecipeByName").get(RecipesCtrl.apiGetRecipeByName);
 
 router.route("/rateRecipe").patch(RecipesCtrl.apiPatchRecipeRating)
 
-router.route("/mealPlan").put(RecipesCtrl.apiAddtoPlan)
+router.route("/mealPlan").put(RecipesCtrl.apiAddtoPlan).get(RecipesCtrl.apiGetMealPlan)
 
 export default router;

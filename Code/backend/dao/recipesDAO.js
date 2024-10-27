@@ -284,6 +284,31 @@ export default class RecipesDAO {
       console.log(`Unable to add recipe to meal plan, ${e}`)
     }
   }
+
+  static async getMealPlan(userName) {
+    let cursor;
+    let mealPlanResponse = {
+      sunday: "",
+      monday: "",
+      tuesday: "",
+      wednesday: "",
+      thursday: "",
+      friday: "",
+      saturday: ""
+    }
+    try {
+      cursor = await users.findOne({ "userName": userName });
+      if (cursor.userName) {
+        let plan = cursor['meal-plan'] ? cursor['meal-plan'] : {}
+        mealPlanResponse = {...mealPlanResponse, ...plan}
+        return mealPlanResponse
+      } else {
+        throw new Error(`Cannot find user with name ${userName}`);
+      }
+    } catch (e) {
+      console.log(`error: ${e}`)
+    }
+  }
     
   static async getIngredients(){
     let response = {};
