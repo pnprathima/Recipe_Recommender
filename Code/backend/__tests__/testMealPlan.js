@@ -16,6 +16,15 @@ describe("Meal Plan", function() {
             const response2 = await request.get("/mealPlan?userName=Test")
             expect(response2.text.includes("monday")).true
             expect(response2.text.includes(res0JSON["recipes"][0]['_id'])).true
+        });
+        it("Should remove a recipe from the meal plan", async function() {
+            const response = await request.put("/mealPlan")
+                .send({ recipeID: "", userName: "Test", weekDay: "monday" });
+            expect(response.status).to.eql(200);
+            const response2 = await request.get("/mealPlan?userName=Test")
+            const res2JSON = JSON.parse(response2.text)
+            expect(response2.text.includes("monday")).true
+            expect(res2JSON.monday === "").true
         })
     })
 })
