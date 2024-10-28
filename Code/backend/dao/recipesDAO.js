@@ -335,6 +335,7 @@ export default class RecipesDAO {
       console.error(`DAO: Unable to remove bookmark:`, e);
       throw e;
     }
+  }
     
   static async addRecipeToMealPlan(userName, recipeID, weekDay) {
     let response;
