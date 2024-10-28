@@ -7,7 +7,6 @@ dotenv.config()
 
 export default async function (globalConfig, projectConfig) {
     const uri = process.env.RECIPES_DB_URI;
-    console.log(uri)
     var mongoClient = MongoClient.connect(uri, {
         useNewUrlParser: true,
         maxPoolSize: 50,

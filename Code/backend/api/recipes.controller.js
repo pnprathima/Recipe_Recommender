@@ -158,4 +158,22 @@ export default class RecipesController {
       res.status(500).json({ error: e });
     }
   }
+
+  static async apiAddtoPlan(req, res, next) {
+    try {
+      let response = await RecipesDAO.addRecipeToMealPlan(req.body.userName, req.body.recipeID, req.body.weekDay)
+      res.json(response)
+    }catch(e) {
+      res.status(500).json({ error: e });
+    }
+  }
+
+  static async apiGetMealPlan(req, res, next) {
+    try {
+      let response = await RecipesDAO.getMealPlan(req.query.userName)
+      res.json(response)
+    }catch(e) {
+      res.status(500).json({ error: e });
+    }
+  }
 }
