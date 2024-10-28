@@ -62,10 +62,10 @@ export default class RecipesController {
   static async apiRemoveRecipeFromProfile(req, res) {
     const { userName, recipeId } = req.body;
     try {
-      const result = await RecipesDAO.removeBookmark(userName, recipeId)
-      res.json(result)
+      const result = await RecipesDAO.removeBookmark(userName, recipeId);
+      res.json(result);
     } catch (e) {
-      res.status(500).json({error: e})
+      res.status(500).json({ error: e });
     }
   }
 
@@ -161,18 +161,22 @@ export default class RecipesController {
 
   static async apiAddtoPlan(req, res, next) {
     try {
-      let response = await RecipesDAO.addRecipeToMealPlan(req.body.userName, req.body.recipeID, req.body.weekDay)
-      res.json(response)
-    }catch(e) {
+      let response = await RecipesDAO.addRecipeToMealPlan(
+        req.body.userName,
+        req.body.recipeID,
+        req.body.weekDay
+      );
+      res.json(response);
+    } catch (e) {
       res.status(500).json({ error: e });
     }
   }
 
   static async apiGetMealPlan(req, res, next) {
     try {
-      let response = await RecipesDAO.getMealPlan(req.query.userName)
-      res.json(response)
-    }catch(e) {
+      let response = await RecipesDAO.getMealPlan(req.query.userName);
+      res.json(response);
+    } catch (e) {
       res.status(500).json({ error: e });
     }
   }

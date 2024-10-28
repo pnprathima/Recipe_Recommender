@@ -48,9 +48,6 @@ const BookMarksRecipeCard = (props) => {
           duration: 3000,
           isClosable: true,
         });
-        if (typeof props.onRemove === "function") {
-          props.onRemove(recipeId);
-        }
       } else {
         throw new Error(response.data.message || "Failed to remove bookmark");
       }
