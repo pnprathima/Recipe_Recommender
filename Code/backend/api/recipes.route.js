@@ -24,4 +24,6 @@ router.route("/getRecipeByName").get(RecipesCtrl.apiGetRecipeByName);
 
 router.route("/rateRecipe").patch(RecipesCtrl.apiPatchRecipeRating);
 
+router.route("/removeBookmark").post(RecipesCtrl.apiRemoveRecipeFromProfile);
+
 export default router;

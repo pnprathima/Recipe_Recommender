@@ -59,6 +59,16 @@ export default class RecipesController {
     }
   }
 
+  static async apiRemoveRecipeFromProfile(req, res) {
+    const { userName, recipeId } = req.body;
+    try {
+      const result = await RecipesDAO.removeBookmark(userName, recipeId)
+      res.json(result)
+    } catch (e) {
+      res.status(500).json({error: e})
+    }
+  }
+
   static async apiGetRecipeByName(req, res) {
     let filters = {};
     //Checking the query to find the required results

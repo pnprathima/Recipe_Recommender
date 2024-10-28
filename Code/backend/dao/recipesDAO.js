@@ -277,9 +277,9 @@ export default class RecipesDAO {
         return { success: false, message: "User not found" };
       }
 
-      const existingBookmark = user.bookmarks.find(
+      const existingBookmark = user.bookmarks ? user.bookmarks.find(
         (bookmark) => bookmark._id.toString() === recipe._id.toString()
-      );
+      ) : null;
       if (existingBookmark) {
         console.log("Recipe already bookmarked");
         return { success: false, message: "Recipe already bookmarked" };
@@ -312,9 +312,9 @@ export default class RecipesDAO {
   static async removeBookmark(userName, recipeId) {
     try {
       console.log("DAO: Removing bookmark for:", { userName, recipeId });
-      const updateResponse = await this.users.updateOne(
+      const updateResponse = await users.updateOne(
         { userName: userName },
-        { $pull: { savedRecipes: { _id: recipeId } } }
+        { $pull: { bookmarks: { _id: recipeId } } }
       );
       console.log("DAO: Update response:", updateResponse);
 
