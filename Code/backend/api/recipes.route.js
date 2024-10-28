@@ -10,7 +10,7 @@ router.route("/cuisines").get(RecipesCtrl.apiGetRecipeCuisines);
 
 router.route("/addRecipe").post(RecipesCtrl.apiPostRecipe);
 
-router.route('/callIngredients').get(RecipesCtrl.apiGetIngredients);
+router.route("/callIngredients").get(RecipesCtrl.apiGetIngredients);
 
 router.route("/signup").post(RecipesCtrl.apiAuthSignup);
 
@@ -22,7 +22,9 @@ router.route("/addRecipeToProfile").post(RecipesCtrl.apiPostRecipeToProfile);
 
 router.route("/getRecipeByName").get(RecipesCtrl.apiGetRecipeByName);
 
-router.route("/rateRecipe").patch(RecipesCtrl.apiPatchRecipeRating)
+router.route("/rateRecipe").patch(RecipesCtrl.apiPatchRecipeRating);
+
+router.route("/removeBookmark").post(RecipesCtrl.apiRemoveRecipeFromProfile);
 
 router.route("/mealPlan").put(RecipesCtrl.apiAddtoPlan).get(RecipesCtrl.apiGetMealPlan)
 

@@ -12,6 +12,7 @@ import SearchByRecipe from "./components/SearchByRecipe.js";
 import Login from "./components/Login.js";
 import UserProfile from "./components/UserProfile.js";
 import LandingPage from "./components/LandingPage.js";
+import BookMarksRecipeList from "./components/BookMarksRecipeList"; // Import BookMarksRecipeList
 
 // Main component of the project
 class App extends Component {
@@ -31,7 +32,9 @@ class App extends Component {
       isLoading: false,
       isLoggedIn: false,
       isProfileView: false,
-      userData: {},
+      userData: {
+        bookmarks: [],
+      },
     };
   }
 
@@ -166,6 +169,59 @@ class App extends Component {
     });
   };
 
+  handleBookMarks = async () => {
+    // Fetch bookmarks when navigating to profile view
+    const userName = localStorage.getItem("userName");
+    try {
+      const response = await recipeDB.get("/recipes/getBookmarks", {
+        params: { userName },
+      });
+      this.setState({
+        isProfileView: true,
+        userData: {
+          ...this.state.userData,
+          bookmarks: response.data.recipes, // Set fetched bookmarks to state
+        },
+      });
+    } catch (err) {
+      console.error("Error fetching bookmarks", err);
+    }
+  };
+
+  handleRemoveBookmark = async (recipeId) => {
+    const userName = localStorage.getItem("userName");
+
+    try {
+      const response = await recipeDB.post("/recipes/removeBookmark", {
+        userName,
+        recipeId,
+      });
+
+      if (response.data.success) {
+        // Update the bookmarks in the state
+        this.setState((prevState) => ({
+          userData: {
+            ...prevState.userData,
+            bookmarks: prevState.userData.bookmarks.filter(
+              (recipe) => recipe.id !== recipeId // Remove based on recipeId
+            ),
+          },
+        }));
+      } else {
+        throw new Error(response.data.message || "Failed to remove bookmark");
+      }
+    } catch (error) {
+      console.error("Failed to remove bookmark:", error);
+      // You might want to show a toast or some other error message to the user here
+    }
+  };
+
+  handleProfileView = () => {
+    this.setState({
+      isProfileView: false,
+    });
+  };
+
   render() {
     return (
       <div>
@@ -173,7 +229,7 @@ class App extends Component {
           handleLogout={this.handleLogout}
           handleBookMarks={this.handleBookMarks}
           user={this.state.isLoggedIn ? this.state.userData : null}
-          onLoginClick={() => this.setState({ isLoggedIn: false })} // To show the login page/modal
+          onLoginClick={() => this.setState({ isLoggedIn: false })}
         />
         {this.state.isLoggedIn ? (
           <>
@@ -181,7 +237,13 @@ class App extends Component {
               <UserProfile
                 handleProfileView={this.handleProfileView}
                 user={this.state.userData}
-              />
+              >
+                {/* Add BookMarksRecipeList to render bookmarks */}
+                <BookMarksRecipeList
+                  recipes={this.state.userData.bookmarks}
+                  onRemove={this.handleRemoveBookmark}
+                />
+              </UserProfile>
             ) : (
               <Tabs variant='soft-rounded' colorScheme='green'>
                 <TabList ml={10}>
@@ -229,10 +291,6 @@ class App extends Component {
             )}
           </>
         )}
-        {/* handleSubmit function is being sent as a prop to the form component*/}
-
-        {/* RecipeList is the component where results are displayed.
-  App's recipeList state item is being sent as a prop */}
       </div>
     );
   }

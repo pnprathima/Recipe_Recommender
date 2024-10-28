@@ -16,7 +16,9 @@ export default class RecipesDAO {
     }
     try {
       recipes = await conn.db(process.env.RECIPES_NS).collection("recipe");
-      ingredients = await conn.db(process.env.RECIPES_NS).collection("ingredient_list");
+      ingredients = await conn
+        .db(process.env.RECIPES_NS)
+        .collection("ingredient_list");
       users = await conn.db(process.env.RECIPES_NS).collection("user");
     } catch (e) {
       console.error(
@@ -29,17 +31,17 @@ export default class RecipesDAO {
     let query;
     let cursor;
     let user;
-    query = { "userName": filters.userName }
+    query = { userName: filters.userName };
     if (filters) {
       cursor = await users.findOne(query);
       if (cursor.userName) {
         if (cursor.password == filters.password) {
-          return { success: true, user: cursor }
+          return { success: true, user: cursor };
         } else {
-          return { success: false }
+          return { success: false };
         }
       } else {
-        return { success: false }
+        return { success: false };
       }
     }
   }
@@ -48,36 +50,36 @@ export default class RecipesDAO {
     let query;
     let cursor;
     let user;
-    query = { "userName": data.userName }
-    console.log(query)
+    query = { userName: data.userName };
+    console.log(query);
     if (data) {
       cursor = await users.findOne(query);
-      console.log(cursor)
-      if (cursor!==null) {
-        return {success: false}
+      console.log(cursor);
+      if (cursor !== null) {
+        return { success: false };
       } else {
-        const res = await users.insertOne(data)
-        return { success: true }
+        const res = await users.insertOne(data);
+        return { success: true };
       }
     }
   }
-  
+
   //function to get bookmarks
   static async getBookmarks(userName) {
     let query;
     let cursor;
     let user;
-    query = { "userName": userName }
-    console.log(query)
+    query = { userName: userName };
+    console.log(query);
     try {
       cursor = await users.findOne(query);
       if (cursor.userName) {
         return cursor.bookmarks;
       } else {
-        return { bookmarks: [] }
+        return { bookmarks: [] };
       }
     } catch (e) {
-      console.log(`error: ${e}`)
+      console.log(`error: ${e}`);
     }
   }
 
@@ -87,23 +89,25 @@ export default class RecipesDAO {
     if (filters) {
       if ("recipeName" in filters) {
         const words = filters["recipeName"].split(" ");
-        const regexPattern = words.map(word => `(?=.*\\b${word}\\b)`).join('');
+        const regexPattern = words
+          .map((word) => `(?=.*\\b${word}\\b)`)
+          .join("");
         const regex = new RegExp(regexPattern, "i");
-        query = { "TranslatedRecipeName": { $regex: regex } };
+        query = { TranslatedRecipeName: { $regex: regex } };
         // query["Cuisine"] = "Indian";
       }
       let recipesList;
       try {
         recipesList = await recipes
           .find(query)
-          .collation({ locale: "en", strength: 2 }).toArray();
-        return { recipesList }
+          .collation({ locale: "en", strength: 2 })
+          .toArray();
+        return { recipesList };
       } catch (e) {
         console.error(`Unable to issue find command, ${e}`);
         return { recipesList: [], totalNumRecipess: 0 };
       }
     }
-
   }
 
   //Function to get the Recipe List
@@ -215,7 +219,7 @@ export default class RecipesDAO {
     inputRecipe["TotalTimeInMins"] = recipe["cookingTime"];
     inputRecipe["Diet-type"] = recipe["dietType"];
     inputRecipe["Recipe-rating"] = recipe["recipeRating"];
-    inputRecipe["Times-rated"] = 1
+    inputRecipe["Times-rated"] = 1;
     inputRecipe["Cuisine"] = recipe["cuisine"];
     inputRecipe["image-url"] = recipe["imageURL"];
     inputRecipe["URL"] = recipe["recipeURL"];
@@ -236,42 +240,102 @@ export default class RecipesDAO {
     console.log("Input Recipe");
     console.log(inputRecipe);
     let response = {};
-    try{
+    try {
       response = await recipes.insertOne(inputRecipe);
       return response;
-    } catch(e){
+    } catch (e) {
       console.error(`Unable to add recipe, ${e}`);
       return response;
     }
   }
 
   static async rateRecipe(ratingBody) {
-    let r = await recipes.find({_id: new ObjectId(ratingBody.recipeID)}).collation({ locale: "en", strength: 2 }).toArray();
-    let recipe = r[0]
-    let timesRated = recipe["Times-rated"] ? Number(recipe["Times-rated"]) : 1
-    let newRating = Number(recipe["Recipe-rating"]) * timesRated
-    newRating += ratingBody.rating
-    timesRated++
-    newRating /= timesRated
-    await recipes.updateOne({_id:  new ObjectId(ratingBody.recipeID)}, {$set: {'Times-rated': timesRated, 'Recipe-rating': newRating}})
+    let r = await recipes
+      .find({ _id: new ObjectId(ratingBody.recipeID) })
+      .collation({ locale: "en", strength: 2 })
+      .toArray();
+    let recipe = r[0];
+    let timesRated = recipe["Times-rated"] ? Number(recipe["Times-rated"]) : 1;
+    let newRating = Number(recipe["Recipe-rating"]) * timesRated;
+    newRating += ratingBody.rating;
+    timesRated++;
+    newRating /= timesRated;
+    await recipes.updateOne(
+      { _id: new ObjectId(ratingBody.recipeID) },
+      { $set: { "Times-rated": timesRated, "Recipe-rating": newRating } }
+    );
   }
 
-    //function to add recipe to user profile
-    static async addRecipeToProfile(userName, recipe) {
-      let response;
-      console.log(userName)
-      try {
-        response = await users.updateOne(
-          { userName: userName },
-          { $push: { bookmarks: recipe } }
-        )
-        console.log(response)
-        return response;
-      } catch (e) {
-        console.log(`Unable to add recipe, ${e}`)
-      }
-    }
+  //function to add recipe to user profile
+  static async addRecipeToProfile(userName, recipe) {
+    try {
+      console.log(`Attempting to add recipe to profile for user: ${userName}`);
 
+      // First, check if the recipe already exists in the user's bookmarks
+      const user = await users.findOne({ userName: userName });
+      if (!user) {
+        return { success: false, message: "User not found" };
+      }
+
+      const existingBookmark = user.bookmarks ? user.bookmarks.find(
+        (bookmark) => bookmark._id.toString() === recipe._id.toString()
+      ) : null;
+      if (existingBookmark) {
+        console.log("Recipe already bookmarked");
+        return { success: false, message: "Recipe already bookmarked" };
+      }
+
+      // If the recipe doesn't exist, add it to the bookmarks
+      const updateResult = await users.updateOne(
+        { userName: userName },
+        { $addToSet: { bookmarks: recipe } }
+      );
+
+      console.log("Update result:", updateResult);
+
+      if (updateResult.modifiedCount === 0) {
+        console.log("No changes made to bookmarks");
+        return { success: false, message: "No changes made to bookmarks" };
+      }
+
+      console.log("Recipe added to bookmarks successfully");
+      return {
+        success: true,
+        message: "Recipe added to bookmarks successfully",
+      };
+    } catch (e) {
+      console.error(`Error in addRecipeToProfile: ${e}`);
+      throw e;
+    }
+  }
+
+  static async removeBookmark(userName, recipeId) {
+    try {
+      console.log("DAO: Removing bookmark for:", { userName, recipeId });
+      const updateResponse = await users.updateOne(
+        { userName: userName },
+        { $pull: { bookmarks: { _id: recipeId } } }
+      );
+      console.log("DAO: Update response:", updateResponse);
+
+      if (updateResponse.modifiedCount === 1) {
+        console.log("DAO: Bookmark removed successfully");
+        return { success: true, message: "Bookmark removed successfully" };
+      } else if (updateResponse.matchedCount === 0) {
+        console.log("DAO: User not found");
+        return { success: false, message: "User not found" };
+      } else {
+        console.log("DAO: Bookmark not found or already removed");
+        return {
+          success: false,
+          message: "Bookmark not found or already removed",
+        };
+      }
+    } catch (e) {
+      console.error(`DAO: Unable to remove bookmark:`, e);
+      throw e;
+    }
+    
   static async addRecipeToMealPlan(userName, recipeID, weekDay) {
     let response;
     try {
@@ -309,15 +373,15 @@ export default class RecipesDAO {
       console.log(`error: ${e}`)
     }
   }
-    
-  static async getIngredients(){
+
+  static async getIngredients() {
     let response = {};
-    try{
-      response = await ingredients.distinct('item_name');
+    try {
+      response = await ingredients.distinct("item_name");
       return response;
-    }catch(e){
+    } catch (e) {
       console.error(`Unable to get ingredients, ${e}`);
       return response;
     }
-  } 
+  }
 }
