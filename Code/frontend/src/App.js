@@ -18,8 +18,10 @@ import UserMealPlan from "./components/UserMealPlan.js";
 // Main component of the project
 class App extends Component {
   // constructor for the App Component
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    // this.handleRemoveBookmark = this.handleRemoveBookmark.bind(this);
 
     this.state = {
       cuisine: "",
@@ -135,7 +137,7 @@ class App extends Component {
   handleRecipesByName = (recipeName) => {
     this.setState({
       isLoading: true,
-      searchName: recipeName
+      searchName: recipeName,
     });
     recipeDB
       .get("/recipes/getRecipeByName", {
@@ -209,12 +211,11 @@ class App extends Component {
       });
 
       if (response.data.success) {
-        // Update the bookmarks in the state
         this.setState((prevState) => ({
           userData: {
             ...prevState.userData,
             bookmarks: prevState.userData.bookmarks.filter(
-              (recipe) => recipe.id !== recipeId // Remove based on recipeId
+              (recipe) => (recipe.id || recipe._id) !== recipeId // Remove based on recipeId
             ),
           },
         }));
@@ -223,7 +224,6 @@ class App extends Component {
       }
     } catch (error) {
       console.error("Failed to remove bookmark:", error);
-      // You might want to show a toast or some other error message to the user here
     }
   };
 
@@ -251,10 +251,10 @@ class App extends Component {
                 handleProfileView={this.handleProfileView}
                 user={this.state.userData}
               >
-                {/* Add BookMarksRecipeList to render bookmarks */}
+                {}
                 <BookMarksRecipeList
                   recipes={this.state.userData.bookmarks}
-                  onRemove={this.handleRemoveBookmark}
+                  // onRemove={this.handleRemoveBookmark}
                 />
               </UserProfile>
             ) : (this.state.isMealPlanView ? (
@@ -286,7 +286,11 @@ class App extends Component {
                     {this.state.isLoading ? (
                       <RecipeLoading />
                     ) : (
-                      <RecipeList recipes={this.state.recipeByNameList} refresh={this.handleRecipesByName} searchName={this.state.searchName}/>
+                      <RecipeList
+                        recipes={this.state.recipeByNameList}
+                        refresh={this.handleRecipesByName}
+                        searchName={this.state.searchName}
+                      />
                     )}
                   </TabPanel>
                 </TabPanels>
