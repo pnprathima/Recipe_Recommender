@@ -25,7 +25,6 @@ jobs:
           echo RECIPES_NS=${{ secrets.DB_NAME }} >> .env
           echo PORT=${{ secrets.API_PORT }} >> .env
           echo GMAIL=${{ secrets.GMAIL }} >> .env
-          cat .env
           npm install
           npx nodemon &
     - name: Run backend tests
