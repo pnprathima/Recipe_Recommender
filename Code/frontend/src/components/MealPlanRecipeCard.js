@@ -10,9 +10,21 @@ import {
   Box
 } from "@chakra-ui/react";
 import Rating from "./Rating";
+import recipeDB from "../apis/recipeDB";
 
 
 const MealPlanRecipeCard = (props) => {
+    const removeFromMealPlan = (day) => {
+        const requestBody = {
+            userName: localStorage.getItem("userName"),
+            recipeID: "",
+            weekDay: day
+        }
+        recipeDB.put("/recipes/mealPlan", requestBody).then((res) => {
+            props.updateMealPlan()
+        })
+    }
+
     return (
         <Card
           data-testid='recipeCard'
@@ -62,15 +74,18 @@ const MealPlanRecipeCard = (props) => {
             <Text data-testid='diet' fontWeight='bold' mb={2}>
               Diet Type: {props.recipe["Diet-type"]}
             </Text>
-            {/* <Tag
-              as='a'
-              colorScheme='red'
-              variant='solid'
-              cursor='pointer'
-              mt={2}
-            >
-              Remove Bookmark
-            </Tag> */}
+            <Box justifySelf="center">
+                <Tag
+                as='a'
+                colorScheme='red'
+                variant='solid'
+                cursor='pointer'
+                mt={2}
+                onClick={() => removeFromMealPlan(props.day)}
+                >
+                Remove
+                </Tag>
+            </Box>
           </CardBody>
         </Card>
     );

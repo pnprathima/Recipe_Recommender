@@ -17,6 +17,7 @@ import {
 } from "@chakra-ui/react";
 import Rating from "./Rating";
 import MealPlanRecipeCard from "./MealPlanRecipeCard";
+import AddToPlanModal from "./AddToPlanModal";
 
 const MealPlanRecipeList = (props) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -42,9 +43,13 @@ const MealPlanRecipeList = (props) => {
               data-testid='mealPlanDay'
               size='md'
               textAlign='center'
-              mb="10px"
+              mb="15px"
             >{day.toUpperCase()}</Heading>
-            { props.mealPlan[day] ? (<MealPlanRecipeCard recipe={props.mealPlan[day]} handler={handleViewRecipe}></MealPlanRecipeCard>) : (<></>)}
+            { props.mealPlan[day] ? 
+                (<MealPlanRecipeCard recipe={props.mealPlan[day]} handler={handleViewRecipe} updateMealPlan={props.updateMealPlan} day={day}></MealPlanRecipeCard>) : 
+                (<Box justifySelf="center" mt={5}>
+                    <AddToPlanModal day={day} text={false} bookmarks={props.bookmarks} updateMealPlan={props.updateMealPlan}></AddToPlanModal>
+                </Box>)}
         </Box>)
         weekDay++
     }
