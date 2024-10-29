@@ -1,3 +1,4 @@
+import { TextEncoder, TextDecoder } from 'util';
 import mongodb from "mongodb"
 const MongoClient = mongodb.MongoClient;
 import recipes from "./testRecipes.json" assert {type: 'json'}
@@ -6,6 +7,8 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 export default async function (globalConfig, projectConfig) {
+  
+    Object.assign(global, { TextDecoder, TextEncoder });
     const uri = process.env.RECIPES_DB_URI;
     var mongoClient = MongoClient.connect(uri, {
         useNewUrlParser: true,

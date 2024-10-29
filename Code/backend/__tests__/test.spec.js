@@ -1,7 +1,11 @@
-const mongodb = require("mongodb");
+//const mongodb = require("mongodb");
+import { TextEncoder, TextDecoder } from 'util';
+Object.assign(global, { TextDecoder, TextEncoder });
+import * as mongodb from "mongodb"
 const MongoClient = mongodb.MongoClient;
 // const request = require("supertest")(httplocalhost5000apiv1);
 const expect = require("chai").expect;
+//import expect from "chai"
 // var util= require('util');
 // var encoder = new util.TextEncoder('utf-8');
 //
