@@ -7,7 +7,9 @@ import {
   CardBody,
   Image,
   Tag,
+  Box
 } from "@chakra-ui/react";
+import Rating from "./Rating";
 
 
 const MealPlanRecipeCard = (props) => {
@@ -22,8 +24,9 @@ const MealPlanRecipeCard = (props) => {
             transitionDuration: "0.2s",
           }}
           transition='0.2s'
+          my={0}
           mb={4}
-          p={4}
+          px={1}
         >
           <CardHeader>
             <Heading
@@ -31,12 +34,13 @@ const MealPlanRecipeCard = (props) => {
               size='md'
               textAlign='center'
               color='teal.600'
+              onClick={() => props.handler(props.recipe)}
               cursor='pointer' // Add pointer cursor to indicate it's clickable
             >
               {props.recipe.TranslatedRecipeName}
             </Heading>
           </CardHeader>
-          <CardBody>
+          <CardBody py={1} px={1}>
             <Image
               data-testid='recipeImg'
               objectFit='cover'
@@ -48,13 +52,17 @@ const MealPlanRecipeCard = (props) => {
             <Text data-testid='time' fontWeight='bold' mb={1}>
               Cooking Time: {props.recipe.TotalTimeInMins} mins
             </Text>
-            <Text data-testid='rating' fontWeight='bold' mb={1}>
-              Rating: {props.recipe["Recipe-rating"]}
-            </Text>
+            <Box display="flex" flexDirection="row" alignItems="center" mb={1} flexWrap="wrap" px={0} widht="100%">
+                <Box width={["100%, 100%, 100%", "100%", "100%", "auto"]}><Text data-testid='rating' fontWeight='bold' >
+                Rating: 
+                {/* {props.recipe["Recipe-rating"]} */}
+                </Text></Box>
+                <Rating rating={props.recipe["Recipe-rating"]}></Rating>
+            </Box>
             <Text data-testid='diet' fontWeight='bold' mb={2}>
               Diet Type: {props.recipe["Diet-type"]}
             </Text>
-            <Tag
+            {/* <Tag
               as='a'
               colorScheme='red'
               variant='solid'
@@ -62,7 +70,7 @@ const MealPlanRecipeCard = (props) => {
               mt={2}
             >
               Remove Bookmark
-            </Tag>
+            </Tag> */}
           </CardBody>
         </Card>
     );

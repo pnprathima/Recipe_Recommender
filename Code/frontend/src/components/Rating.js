@@ -12,7 +12,7 @@ const Rating = (props) => {
         height={"10%"}
         src={require("./componentImages/Filled_star.png")}
         key={i}
-        mx="2px"></Image>)
+        mr="2px"></Image>)
     }
     if(partial > 0.25 && partial < 0.75) {
         stars.push(<Image data-testid="recipeRate"
@@ -21,7 +21,7 @@ const Rating = (props) => {
             height={"10%"}
             src={require("./componentImages/Half_star.png")}
             key={stars.length}
-            mx="2px"></Image>)
+            mr="2px"></Image>)
     }
     while(stars.length < 5) {
         stars.push(<Image data-testid="recipeRate"
@@ -30,7 +30,7 @@ const Rating = (props) => {
             height={"10%"}
             src={require("./componentImages/Empty_star.png")}
             key={stars.length}
-            mx="2px"></Image>)
+            mr="2px"></Image>)
     }
     return stars
     

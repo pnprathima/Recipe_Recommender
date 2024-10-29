@@ -33,6 +33,7 @@ class App extends Component {
       isLoading: false,
       isLoggedIn: false,
       isProfileView: false,
+      isMealPlanView: false,
       userData: {
         bookmarks: [],
       },
@@ -42,12 +43,21 @@ class App extends Component {
   handleBookMarks = () => {
     this.setState({
       isProfileView: true,
+      isMealPlanView: false
     });
   };
+
+  handleMealPlan = () => {
+    this.setState({
+      isProfileView: false,
+      isMealPlanView: true
+    })
+  }
 
   handleProfileView = () => {
     this.setState({
       isProfileView: false,
+      isMealPlanView: false,
     });
   };
 
@@ -220,6 +230,7 @@ class App extends Component {
   handleProfileView = () => {
     this.setState({
       isProfileView: false,
+      isMealPlanView: false
     });
   };
 
@@ -229,22 +240,24 @@ class App extends Component {
         <Nav
           handleLogout={this.handleLogout}
           handleBookMarks={this.handleBookMarks}
+          handleMealPlan={this.handleMealPlan}
           user={this.state.isLoggedIn ? this.state.userData : null}
           onLoginClick={() => this.setState({ isLoggedIn: false })}
         />
         {this.state.isLoggedIn ? (
           <>
             {this.state.isProfileView ? (
-              // <UserProfile
-              //   handleProfileView={this.handleProfileView}
-              //   user={this.state.userData}
-              // >
-              //   {/* Add BookMarksRecipeList to render bookmarks */}
-              //   <BookMarksRecipeList
-              //     recipes={this.state.userData.bookmarks}
-              //     onRemove={this.handleRemoveBookmark}
-              //   />
-              // </UserProfile>
+              <UserProfile
+                handleProfileView={this.handleProfileView}
+                user={this.state.userData}
+              >
+                {/* Add BookMarksRecipeList to render bookmarks */}
+                <BookMarksRecipeList
+                  recipes={this.state.userData.bookmarks}
+                  onRemove={this.handleRemoveBookmark}
+                />
+              </UserProfile>
+            ) : (this.state.isMealPlanView ? (
               <UserMealPlan handleProfileView={this.handleProfileView}
                 user={this.state.userData}></UserMealPlan>
             ) : (
@@ -278,7 +291,7 @@ class App extends Component {
                   </TabPanel>
                 </TabPanels>
               </Tabs>
-            )}
+            ))}
           </>
         ) : (
           <>

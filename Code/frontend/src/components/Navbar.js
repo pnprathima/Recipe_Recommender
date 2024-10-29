@@ -49,6 +49,9 @@ export default function Nav(props) {
   const handleBookMarks = () => {
     props.handleBookMarks();
   };
+  const handleMealPlan = () => {
+    props.handleMealPlan();
+  }
   const handleLogout = () => {
     console.log("logged out");
     props.handleLogout();
@@ -94,6 +97,7 @@ export default function Nav(props) {
                     <br />
                     <MenuDivider />
                     <MenuItem onClick={handleBookMarks}>Bookmarks</MenuItem>
+                    <MenuItem onClick={handleMealPlan}>Meal Plan</MenuItem>
                     <MenuItem onClick={handleLogout}>Logout</MenuItem>
                   </MenuList>
                 </Menu>

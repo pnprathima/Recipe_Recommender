@@ -29,11 +29,7 @@ const UserMealPlan = (props) => {
                 <Spacer />
                 <Button onClick={handleClick} mr={10}>Go to HomePage</Button>
             </Flex>
-            {mealPlan.length === 0 ?
-                <></>
-                :
-                <MealPlanRecipeList mealPlan={mealPlan} />
-            }
+            <MealPlanRecipeList mealPlan={mealPlan} />
         </>
     )
 }
