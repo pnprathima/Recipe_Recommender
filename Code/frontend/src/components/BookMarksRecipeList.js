@@ -20,7 +20,7 @@ import {
 } from "@chakra-ui/react";
 import BookMarksRecipeCard from "./BookMarksRecipeCard";
 
-const BookMarksRecipeList = ({ recipes, onRemove }) => {
+const BookMarksRecipeList = ({ recipes }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentRecipe, setCurrentRecipe] = useState({});
   const youtubeVideosURL = `https://www.youtube.com/results?search_query=${currentRecipe["TranslatedRecipeName"]}`;
@@ -53,10 +53,10 @@ const BookMarksRecipeList = ({ recipes, onRemove }) => {
           {recipes.length !== 0 ? (
             recipes.map((recipe) => (
               <BookMarksRecipeCard
-                key={recipe.id || recipe.TranslatedRecipeName} // Use a unique identifier as key
+                key={recipe.id || recipe._id} // Use a unique identifier as key key={recipe.id || recipe._id}
                 recipe={recipe}
                 handler={handleViewRecipe}
-                onRemove={() => onRemove(recipe.id)} // Pass the onRemove function with the recipe id
+                // onRemove={() => onRemove(recipe.id)} // Pass the onRemove function with the recipe id
               />
             ))
           ) : (

@@ -277,9 +277,11 @@ export default class RecipesDAO {
         return { success: false, message: "User not found" };
       }
 
-      const existingBookmark = user.bookmarks ? user.bookmarks.find(
-        (bookmark) => bookmark._id.toString() === recipe._id.toString()
-      ) : null;
+      const existingBookmark = user.bookmarks
+        ? user.bookmarks.find(
+            (bookmark) => bookmark._id.toString() === recipe._id.toString()
+          )
+        : null;
       if (existingBookmark) {
         console.log("Recipe already bookmarked");
         return { success: false, message: "Recipe already bookmarked" };
@@ -336,17 +338,20 @@ export default class RecipesDAO {
       throw e;
     }
   }
-    
+
   static async addRecipeToMealPlan(userName, recipeID, weekDay) {
     let response;
     try {
-      let updateBody = JSON.parse('{ "meal-plan.' + weekDay + '": "' + recipeID + '" }')
+      let updateBody = JSON.parse(
+        '{ "meal-plan.' + weekDay + '": "' + recipeID + '" }'
+      );
       response = await users.updateOne(
         { userName: userName },
-        { $set: updateBody })
-        return response
+        { $set: updateBody }
+      );
+      return response;
     } catch (e) {
-      console.log(`Unable to add recipe to meal plan, ${e}`)
+      console.log(`Unable to add recipe to meal plan, ${e}`);
     }
   }
 
@@ -359,19 +364,19 @@ export default class RecipesDAO {
       wednesday: "",
       thursday: "",
       friday: "",
-      saturday: ""
-    }
+      saturday: "",
+    };
     try {
-      cursor = await users.findOne({ "userName": userName });
+      cursor = await users.findOne({ userName: userName });
       if (cursor.userName) {
-        let plan = cursor['meal-plan'] ? cursor['meal-plan'] : {}
-        mealPlanResponse = {...mealPlanResponse, ...plan}
-        return mealPlanResponse
+        let plan = cursor["meal-plan"] ? cursor["meal-plan"] : {};
+        mealPlanResponse = { ...mealPlanResponse, ...plan };
+        return mealPlanResponse;
       } else {
         throw new Error(`Cannot find user with name ${userName}`);
       }
     } catch (e) {
-      console.log(`error: ${e}`)
+      console.log(`error: ${e}`);
     }
   }
 
