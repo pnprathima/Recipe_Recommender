@@ -13,6 +13,7 @@ import Login from "./components/Login.js";
 import UserProfile from "./components/UserProfile.js";
 import LandingPage from "./components/LandingPage.js";
 import BookMarksRecipeList from "./components/BookMarksRecipeList"; // Import BookMarksRecipeList
+import UserMealPlan from "./components/UserMealPlan.js";
 
 // Main component of the project
 class App extends Component {
@@ -234,16 +235,18 @@ class App extends Component {
         {this.state.isLoggedIn ? (
           <>
             {this.state.isProfileView ? (
-              <UserProfile
-                handleProfileView={this.handleProfileView}
-                user={this.state.userData}
-              >
-                {/* Add BookMarksRecipeList to render bookmarks */}
-                <BookMarksRecipeList
-                  recipes={this.state.userData.bookmarks}
-                  onRemove={this.handleRemoveBookmark}
-                />
-              </UserProfile>
+              // <UserProfile
+              //   handleProfileView={this.handleProfileView}
+              //   user={this.state.userData}
+              // >
+              //   {/* Add BookMarksRecipeList to render bookmarks */}
+              //   <BookMarksRecipeList
+              //     recipes={this.state.userData.bookmarks}
+              //     onRemove={this.handleRemoveBookmark}
+              //   />
+              // </UserProfile>
+              <UserMealPlan handleProfileView={this.handleProfileView}
+                user={this.state.userData}></UserMealPlan>
             ) : (
               <Tabs variant='soft-rounded' colorScheme='green'>
                 <TabList ml={10}>
