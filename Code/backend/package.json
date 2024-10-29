@@ -39,6 +39,7 @@
       "package.json",
       "package-lock.json"
     ],
-    "globalSetup": "./test_resources/setup.js"
+    "globalSetup": "./test_resources/setup.js",
+    "testEnvironment": "jsdom"
   }
 }
