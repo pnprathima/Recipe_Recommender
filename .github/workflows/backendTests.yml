@@ -20,12 +20,13 @@ jobs:
     - name: Install dependencies
       run: |
           cd Code/backend
-          npm install
           touch .env
-          echo RECIPES_DB_URI=${{secrets.TESTING_DB_URI}} >> .env
-          echo RECIPES_NS=${{secrets.DB_NAME}} >> .env
-          echo PORT=${{secrets.API_PORT}} >> .env
-          echo GMAIL=${{secrets.GMAIL}} >> .env
+          echo RECIPES_DB_URI=${{ secrets.TESTING_DB_URI }} >> .env
+          echo RECIPES_NS=${{ secrets.DB_NAME }} >> .env
+          echo PORT=${{ secrets.API_PORT }} >> .env
+          echo GMAIL=${{ secrets.GMAIL }} >> .env
+          cat .env
+          npm install
           npx nodemon &
     - name: Run backend tests
       run: |
