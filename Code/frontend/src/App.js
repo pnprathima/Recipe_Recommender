@@ -13,6 +13,7 @@ import Login from "./components/Login.js";
 import UserProfile from "./components/UserProfile.js";
 import LandingPage from "./components/LandingPage.js";
 import BookMarksRecipeList from "./components/BookMarksRecipeList"; // Import BookMarksRecipeList
+import UserMealPlan from "./components/UserMealPlan.js";
 
 // Main component of the project
 class App extends Component {
@@ -34,6 +35,7 @@ class App extends Component {
       isLoading: false,
       isLoggedIn: false,
       isProfileView: false,
+      isMealPlanView: false,
       userData: {
         bookmarks: [],
       },
@@ -43,12 +45,21 @@ class App extends Component {
   handleBookMarks = () => {
     this.setState({
       isProfileView: true,
+      isMealPlanView: false
     });
   };
+
+  handleMealPlan = () => {
+    this.setState({
+      isProfileView: false,
+      isMealPlanView: true
+    })
+  }
 
   handleProfileView = () => {
     this.setState({
       isProfileView: false,
+      isMealPlanView: false,
     });
   };
 
@@ -219,6 +230,7 @@ class App extends Component {
   handleProfileView = () => {
     this.setState({
       isProfileView: false,
+      isMealPlanView: false
     });
   };
 
@@ -228,6 +240,7 @@ class App extends Component {
         <Nav
           handleLogout={this.handleLogout}
           handleBookMarks={this.handleBookMarks}
+          handleMealPlan={this.handleMealPlan}
           user={this.state.isLoggedIn ? this.state.userData : null}
           onLoginClick={() => this.setState({ isLoggedIn: false })}
         />
@@ -244,6 +257,9 @@ class App extends Component {
                   // onRemove={this.handleRemoveBookmark}
                 />
               </UserProfile>
+            ) : (this.state.isMealPlanView ? (
+              <UserMealPlan handleProfileView={this.handleProfileView}
+                user={this.state.userData}></UserMealPlan>
             ) : (
               <Tabs variant='soft-rounded' colorScheme='green'>
                 <TabList ml={10}>
@@ -279,7 +295,7 @@ class App extends Component {
                   </TabPanel>
                 </TabPanels>
               </Tabs>
-            )}
+            ))}
           </>
         ) : (
           <>
