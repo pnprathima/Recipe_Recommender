@@ -20,6 +20,7 @@ const AddRecipe = () => {
     });
 
     const [ingredientCount, setIngredientCount] = React.useState(0);
+    const [imageFile, setImageFile] = React.useState(null);
 
     const addIngredient = () => {
         const ingredient = document.getElementById("ingredients").value;
@@ -66,6 +67,9 @@ const AddRecipe = () => {
     }
 
     const addRecipe = () => {
+        const formData = new FormData();
+        formData.append("recipeData", JSON.stringify(recipe));
+        if (imageFile) formData.append("imageFile", imageFile);
         recipeDB.post("/recipes/addRecipe", recipe)
             .then(res => {
                 console.log(res.data);
@@ -101,6 +105,10 @@ const AddRecipe = () => {
             })
             .catch(err => console.log(err));
     }
+
+    const handleFileChange = (event) => {
+        setImageFile(event.target.files[0]);
+    };
 
     const ingredientPrintHandler = () => {
         const ingredientList = recipe.ingredients;
@@ -197,7 +205,7 @@ const AddRecipe = () => {
                     </HStack>
                     <HStack spacing={'5'} alignItems={"flex-start"} >
                         <Input type={"URL"} id="recipeURL" onChange={handleChange} placeholder={"Recipe URL"} />
-                        <Input type={"URL"} id="imageURL" onChange={handleChange} placeholder={"Image URL"} />
+                       <Input type="file"  onChange={handleFileChange} placeholder="Upload Image" />
                     </HStack>
                     <HStack direction="row">
                         <InputGroup variant={"filled"}>
