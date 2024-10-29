@@ -365,7 +365,15 @@ export default class RecipesDAO {
       cursor = await users.findOne({ "userName": userName });
       if (cursor.userName) {
         let plan = cursor['meal-plan'] ? cursor['meal-plan'] : {}
-        mealPlanResponse = {...mealPlanResponse, ...plan}
+        for(const day in plan) {
+          if(plan[day] != "") {
+            let recipe = await recipes.findOne({_id: new ObjectId(plan[day])})
+            let dayPlan = {}
+            dayPlan[day] = recipe
+            mealPlanResponse = {...mealPlanResponse, ...dayPlan}
+          }
+        }
+        console.log(mealPlanResponse)
         return mealPlanResponse
       } else {
         throw new Error(`Cannot find user with name ${userName}`);
