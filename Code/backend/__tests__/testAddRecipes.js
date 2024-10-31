@@ -36,12 +36,14 @@ describe("POST /addRecipes", function () {
             recipeRating: 3,
             cuisine: "American",
             instructions: "1) Cook the food \n2) Eat the food",
-            ingredients: ["Meat", "Pasta", "Sauce"]
+            ingredients: ["Meat", "Pasta", "Sauce"],
+            restaurants: [],
+            locations: []
         }
         const response = await request(app).post(baseURL + "/addRecipe").send(recipe)
         expect(response.status).to.equal(200)
         const response2 = await request(app).get(
-            baseURL + "/getRecipeByName?recipeName=Test_Recipe_1"
+            baseURL + "/getRecipeByName?recipeName=Test_Recipe_2"
         );
         expect(response2.status).to.equal(200)
         expect(response2.text.includes("Test_Recipe_2")).true;
@@ -53,7 +55,9 @@ describe("POST /addRecipes", function () {
             recipeRating: 3,
             cuisine: "American",
             instructions: "1) Cook the food \n2) Eat the food",
-            ingredients: ["Meat", "Pasta", "Sauce"]
+            ingredients: ["Meat", "Pasta", "Sauce"],
+            restaurants: [],
+            locations: []
         }
         const response = await request(app).post(baseURL + "/addRecipe").send(recipe)
         expect(response.status).to.not.equal(200)

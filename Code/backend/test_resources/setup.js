@@ -69,6 +69,9 @@ export default function (globalConfig, projectConfig) {
         }
       ]
     }
+    const ingredients = {"ingredients": [
+      {"item_name": "Tomato"}, {"item_name": "Bread"}, {"item_name": "Lettuce"}, {"item_name": "Bacon"}, 
+    ]}
     Object.assign(global, { TextDecoder, TextEncoder });
     const uri = process.env.RECIPES_DB_URI;
     var mongoClient = MongoClient.connect(uri, {
@@ -82,6 +85,9 @@ export default function (globalConfig, projectConfig) {
         const userCollection = client.db(process.env.RECIPES_NS).collection("user")//.then(async (recipeCollection) => {
         await userCollection.deleteMany({})
         await userCollection.insertMany(users.users)
+        const ingredientCollection = client.db(process.env.RECIPES_NS).collection("ingredient_list")//.then(async (recipeCollection) => {
+        await ingredientCollection.deleteMany({})
+        await ingredientCollection.insertMany(ingredients.ingredients)
         client.close()
     });
 };
