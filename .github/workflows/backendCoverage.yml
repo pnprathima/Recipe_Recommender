@@ -1,0 +1,36 @@
+name: Running Backend Tests With Coverage
+
+on: 
+  pull_request:
+    branches:
+      - group31-fall24
+      - master
+
+jobs:
+  run_backend_tests_Coverage:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 2
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Install dependencies
+      run: |
+          cd Code/backend
+          touch .env
+          echo RECIPES_DB_URI=${{ secrets.TESTING_DB_URI }} >> .env
+          echo RECIPES_NS=${{ secrets.DB_NAME }} >> .env
+          echo PORT=${{ secrets.API_PORT }} >> .env
+          echo GMAIL=${{ secrets.GMAIL }} >> .env
+          npm install
+    - name: Run backend tests with coverage
+      run: |
+          cd Code/backend
+          npm run test-cov
