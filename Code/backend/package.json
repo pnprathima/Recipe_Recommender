@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "set CI=true && jest --setupFiles dotenv/config",
+    "test-cov": "set CI=true && jest --setupFiles dotenv/config --coverage",
     "lint": "eslint 'dao/**.js'",
     "format": "prettier --check ./dao",
     "format:fix": "prettier --write ./dao"
@@ -35,7 +36,6 @@
     "supertest": "^6.1.6"
   },
   "jest": {
-    "collectCoverage": true,
     "collectCoverageFrom": [
       "api/*.js",
       "dao/*.js"
