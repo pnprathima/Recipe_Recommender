@@ -214,6 +214,7 @@ export default class RecipesDAO {
     inputRecipe["Times-rated"] = 1;
     inputRecipe["Cuisine"] = recipe["cuisine"];
     inputRecipe["image-url"] = recipe["imageURL"];
+    inputRecipe["ImageFile"]=recipe["imageFile"]
     inputRecipe["URL"] = recipe["recipeURL"];
     inputRecipe["TranslatedInstructions"] = recipe["instructions"];
     var ingredients = "";
