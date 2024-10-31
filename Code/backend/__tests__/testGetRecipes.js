@@ -82,3 +82,15 @@ describe("GET /recipes", function () {
     expect(response.text.includes("Andhra")).true;
   });
 });
+
+describe("GET /cuisines", function() {
+  it("Should return a list of distinct cuisine types", async function() {
+    await request(app).get(baseURL + "/initDB");
+    const response = await request(app).get(baseURL + "/cuisines");
+
+    expect(response.status).to.equal(200);
+    const resArray = JSON.parse(response.text)
+    expect(resArray.indexOf('Indian')).to.equal(resArray.lastIndexOf("Indian"))
+    expect(resArray.indexOf('American')).to.equal(resArray.lastIndexOf("American"))
+  })
+})
