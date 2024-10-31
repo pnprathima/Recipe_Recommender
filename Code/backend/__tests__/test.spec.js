@@ -1,7 +1,11 @@
-const mongodb = require("mongodb");
+//const mongodb = require("mongodb");
+import { TextEncoder, TextDecoder } from 'util';
+Object.assign(global, { TextDecoder, TextEncoder });
+import * as mongodb from "mongodb"
 const MongoClient = mongodb.MongoClient;
 // const request = require("supertest")(httplocalhost5000apiv1);
 const expect = require("chai").expect;
+//import expect from "chai"
 // var util= require('util');
 // var encoder = new util.TextEncoder('utf-8');
 //
@@ -23,8 +27,7 @@ function test_connectivity_func() {
   // Connection URI. Update username, password, and your-cluster-url to reflect your cluster.
   // See httpsdocs.mongodb.comecosystemdriversnode for more details
 
-  const uri =
-    "mongodb+srv://atharvajoshi067:ZgSvdar14OnteUZx@cluster0.9zuebnu.mongodb.net/recipe_recommender?retryWrites=true&w=majority";
+  const uri = process.env.RECIPES_DB_URI;
   var result = false;
   try {
     // Connect to the MongoDB cluster
