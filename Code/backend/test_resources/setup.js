@@ -10,7 +10,17 @@ export default function (globalConfig, projectConfig) {
     const users = {"users": [
       {
         "userName": "Test",
-        "password": "admin"
+        "password": "admin",
+      },
+      {
+        "userName": "TestB",
+        "password": "adminB",
+        "bookmarks": [
+          {
+            "TranslatedRecipeName": "Test_Recipe_B",
+            "_id": 85
+          }
+        ]
       }
     ]}
     const recipes = {
@@ -21,7 +31,7 @@ export default function (globalConfig, projectConfig) {
           "Diet-type": "",
           "Recipe-rating": 5,
           "Times-rated": 1,
-          "Cuisine": "",
+          "Cuisine": "American",
           "image-url": "",
           "URL": "",
           "TranslatedInstructions": "Cook sandwich",
@@ -40,6 +50,20 @@ export default function (globalConfig, projectConfig) {
           "URL": "",
           "TranslatedInstructions": "Cook the food",
           "Cleaned-Ingredients": "Mango%Rice%",
+          "Restaurant": "",
+          "Restaurant-Location": ""
+        },
+        {
+          "TranslatedRecipeName": "AndhraTwo",
+          "TotalTimeInMins": "20",
+          "Diet-type": "Vegetarian",
+          "Recipe-rating": 5,
+          "Times-rated": 1,
+          "Cuisine": "Indian",
+          "image-url": "",
+          "URL": "",
+          "TranslatedInstructions": "Cook the food",
+          "Cleaned-Ingredients": "Bread%",
           "Restaurant": "",
           "Restaurant-Location": ""
         }
