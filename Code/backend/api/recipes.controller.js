@@ -180,4 +180,13 @@ export default class RecipesController {
       res.status(500).json({ error: e });
     }
   }
+
+  static async apiInitDB(req, res) {
+    try {
+      let response = await RecipesDAO.initDB();
+      res.json(response);
+    } catch (e) {
+      res.status(500).json({ error: e });
+    }
+  }
 }

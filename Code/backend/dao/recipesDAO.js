@@ -1,4 +1,4 @@
-import mongodb from "mongodb";
+import * as mongodb from "mongodb";
 import nodemailer from "nodemailer";
 import password from "./mail_param.js";
 const pass = password.password;
@@ -20,6 +20,7 @@ export default class RecipesDAO {
         .db(process.env.RECIPES_NS)
         .collection("ingredient_list");
       users = await conn.db(process.env.RECIPES_NS).collection("user");
+      console.log("db started")
     } catch (e) {
       console.error(
         `Unable to establish a collection handle in recipesDAO: ${e}`
@@ -399,6 +400,26 @@ export default class RecipesDAO {
     } catch (e) {
       console.error(`Unable to get ingredients, ${e}`);
       return response;
+    }
+  }
+
+  static async initDB() {
+    if(recipes) {
+      return {success: true}
+    }
+    try {
+      await mongodb.MongoClient.connect(process.env.RECIPES_DB_URI, {
+          maxPoolSize: 50,
+          wtimeoutMS: 2500,
+          useNewUrlParser: true,
+      }).then(async (client) => {
+        await this.injectDB(client)
+        return {success: true}
+      })
+      
+    } catch (e) {
+      console.log(e);
+      return {success: false}
     }
   }
 }

@@ -28,4 +28,6 @@ router.route("/removeBookmark").post(RecipesCtrl.apiRemoveRecipeFromProfile);
 
 router.route("/mealPlan").put(RecipesCtrl.apiAddtoPlan).get(RecipesCtrl.apiGetMealPlan)
 
+router.route("/initDB").get(RecipesCtrl.apiInitDB)
+
 export default router;
