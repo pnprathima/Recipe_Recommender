@@ -12,6 +12,7 @@ const AddRecipe = () => {
         cuisine: "",
         recipeURL: "",
         imageURL: "",
+        imageFile:"",
         instructions: "",
         ingredientCount: 0,
         ingredients: [],
@@ -82,6 +83,7 @@ const AddRecipe = () => {
                     cuisine: "",
                     recipeURL: "",
                     imageURL: "",
+                    imageFile:"",
                     instructions: "",
                     ingredientCount: 0,
                     ingredients: [],
@@ -96,6 +98,7 @@ const AddRecipe = () => {
                 document.getElementById("recipeURL").value = "";
                 document.getElementById("imageURL").value = "";
                 document.getElementById("instructions").value = "";
+                document.getElementById("imageFile").value="";
 
                 // Alert user that recipe was added
                 <Alert status="success">
@@ -105,11 +108,9 @@ const AddRecipe = () => {
             })
             .catch(err => console.log(err));
     }
-
     const handleFileChange = (event) => {
         setImageFile(event.target.files[0]);
     };
-
     const ingredientPrintHandler = () => {
         const ingredientList = recipe.ingredients;
 
@@ -205,7 +206,8 @@ const AddRecipe = () => {
                     </HStack>
                     <HStack spacing={'5'} alignItems={"flex-start"} >
                         <Input type={"URL"} id="recipeURL" onChange={handleChange} placeholder={"Recipe URL"} />
-                       <Input type="file"  onChange={handleFileChange} placeholder="Upload Image" />
+                        <Input type={"URL"} id="imageURL" onChange={handleChange} placeholder={"Image URL"} />
+                        <Input type="file" id="imageFile" onChange={handleFileChange} placeholder="Upload Image" />
                     </HStack>
                     <HStack direction="row">
                         <InputGroup variant={"filled"}>
