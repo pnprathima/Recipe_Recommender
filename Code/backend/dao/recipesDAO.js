@@ -342,6 +342,9 @@ export default class RecipesDAO {
   static async addRecipeToMealPlan(userName, recipeID, weekDay) {
     let response;
     try {
+      if(!recipeID) {
+        throw new Error("recipe id not defined")
+      }
       let updateBody = JSON.parse(
         '{ "meal-plan.' + weekDay + '": "' + recipeID + '" }'
       );

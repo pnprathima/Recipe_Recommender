@@ -73,8 +73,10 @@ const MiniRecipeCard = (props) => {
 const AddToPlanModal = (props) => {
     const [isOpen, setIsOpen] = useState(false)
     const [day, setDay] = useState(props.day)
-    const [recipeToAdd, setRecipeToAdd] = useState({})
+    const [recipeToAdd, setRecipeToAdd] = useState(null)
     const onClose = () => {
+        setRecipeToAdd(null)
+        setDay(props.day)
         setIsOpen(false)
     }
 
@@ -138,7 +140,7 @@ const AddToPlanModal = (props) => {
                             <option value='saturday'>Saturday</option>
                         </Select>
                         <Spacer />
-                        <Button colorScheme="teal" onClick={() => addToMealPlan()}>Add to Meal Plan</Button>
+                        <Button colorScheme="teal" onClick={() => addToMealPlan()} isDisabled={!recipeToAdd || !day}>Add to Meal Plan</Button>
                     </Box>
                     </ModalBody>
                 </ModalContent>
