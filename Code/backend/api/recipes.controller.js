@@ -25,7 +25,6 @@ export default class RecipesController {
   static async apiGetBookmarks(req, res) {
     if (req.query.userName) {
       const bookmarks = await RecipesDAO.getBookmarks(req.query.userName);
-      console.log(bookmarks);
       res.json({ bookmarks });
     } else {
       res.json("Username not given");
@@ -33,13 +32,10 @@ export default class RecipesController {
   }
 
   static async apiPostRecipeToProfile(req, res) {
-    console.log("Received request to add recipe to profile");
-    console.log("Request body:", JSON.stringify(req.body, null, 2));
 
     const { userName, recipe } = req.body;
 
     if (!userName || !recipe) {
-      console.log("Missing userName or recipe in request");
       return res
         .status(400)
         .json({ success: false, message: "Missing userName or recipe" });
@@ -47,7 +43,6 @@ export default class RecipesController {
 
     try {
       const result = await RecipesDAO.addRecipeToProfile(userName, recipe);
-      console.log("Result of adding recipe:", result);
       res.json(result);
     } catch (e) {
       console.error("Error in apiPostRecipeToProfile:", e);
@@ -72,7 +67,6 @@ export default class RecipesController {
   static async apiGetRecipeByName(req, res) {
     let filters = {};
     //Checking the query to find the required results
-    console.log(req.query);
     if (req.query.recipeName) {
       filters.recipeName = req.query.recipeName;
     }
@@ -141,7 +135,6 @@ export default class RecipesController {
 
   static async apiPatchRecipeRating(req, res, next) {
     try {
-      console.log(req.body);
       let response = await RecipesDAO.rateRecipe(req.body);
       res.json(response);
     } catch (e) {
@@ -175,6 +168,15 @@ export default class RecipesController {
   static async apiGetMealPlan(req, res, next) {
     try {
       let response = await RecipesDAO.getMealPlan(req.query.userName);
+      res.json(response);
+    } catch (e) {
+      res.status(500).json({ error: e });
+    }
+  }
+
+  static async apiInitDB(req, res) {
+    try {
+      let response = await RecipesDAO.initDB();
       res.json(response);
     } catch (e) {
       res.status(500).json({ error: e });

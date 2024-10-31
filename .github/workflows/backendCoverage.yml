@@ -1,9 +1,13 @@
-name: Running Backend Tests
+name: Running Backend Tests With Coverage
 
-on: push
+on: 
+  pull_request:
+    branches:
+      - group31-fall24
+      - master
 
 jobs:
-  run_backend_tests:
+  run_backend_tests_Coverage:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -26,8 +30,7 @@ jobs:
           echo PORT=${{ secrets.API_PORT }} >> .env
           echo GMAIL=${{ secrets.GMAIL }} >> .env
           npm install
-    - name: Run backend tests
+    - name: Run backend tests with coverage
       run: |
           cd Code/backend
-          npm test
-
+          npm run test-cov

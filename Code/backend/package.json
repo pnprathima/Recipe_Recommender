@@ -6,6 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "set CI=true && jest --setupFiles dotenv/config",
+    "test-cov": "set CI=true && jest --setupFiles dotenv/config --coverage",
     "lint": "eslint 'dao/**.js'",
     "format": "prettier --check ./dao",
     "format:fix": "prettier --write ./dao"
@@ -25,6 +26,7 @@
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
+    "@shelf/jest-mongodb": "^4.3.2",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^29.7.0",
     "eslint": "^7.32.0",
@@ -35,7 +37,8 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "/__tests__/*.{js,jsx}"
+      "api/*.js",
+      "dao/*.js"
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
