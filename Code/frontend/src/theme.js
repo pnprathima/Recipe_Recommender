@@ -6,7 +6,7 @@ const theme = extendTheme({
     useSystemColorMode: false, // Disable system color mode detection
   },
   colors: {
-    // Customize your theme colors
+    // Customize theme colors
     brand: {
       50: '#f0eaff',
       100: '#d7c6ff',
