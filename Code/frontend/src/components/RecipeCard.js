@@ -31,7 +31,7 @@ const RecipeCard = (props) => {
                     <Text data-testid="time">Cooking Time: {props.recipe.TotalTimeInMins} mins</Text>
                     <Text data-testid="rating">Rating: {props.recipe['Recipe-rating']}</Text>
                     <Text data-testid="diet">Diet Type: {props.recipe['Diet-type']}</Text>
-                    <Tag onClick={handleSave} _hover={{bg: "white"}} ml={"160px"} bg={"gray.300"}>save recipe</Tag>
+                    <Tag onClick={handleSave} _hover={{bg: "purple.700"}} ml={"160px"} bg={"gray.300"}>save recipe</Tag>
                 </CardBody>
                 <Image
                     data-testid="recipeImg"

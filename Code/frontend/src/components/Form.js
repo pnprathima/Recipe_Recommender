@@ -184,7 +184,7 @@ class Form extends Component {
               {/* <InputLeftElement pointerEvents='none'>
                             <FontAwesomeIcon size="lg" icon={faLocationDot} />
                         </InputLeftElement> */}
-              <TypeAheadDropDown  iteams={this.state.ingredient_list} placeholder_inp = {'Ingredients'} id_inp={'ingredient'} />
+              <TypeAheadDropDown  iteams={this.state.ingredient_list} placeholder_inp = {'  Ingredients'} id_inp={'ingredient'} />
               {/* <Input size={"lg"} type='text' id="ingredient" placeholder='Ingredients'/> */}
               <InputRightElement>
                 <Button mt={2} mr={2} onClick={this.addHandler}>Add</Button>
@@ -197,7 +197,7 @@ class Form extends Component {
               {/* <InputLeftElement pointerEvents='none'>
                             <FontAwesomeIcon size="lg" icon={faCalendarDays} />
                             </InputLeftElement> */}
-              <TypeAheadDropDown  iteams={this.state.cuisine_list} placeholder_inp = {'Cuisine'} id_inp={'cuisine'} />
+              <TypeAheadDropDown  iteams={this.state.cuisine_list} placeholder_inp = {'  Cuisine'} id_inp={'cuisine'} />
 
               {/* <Input type="text" id="cuisine" color={"gray.500"} size={"lg"} placeholder='Cuisine' /> */}
             </InputGroup>

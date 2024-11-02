@@ -16,7 +16,9 @@ import {
   Stack,
   useColorMode,
   Center,
-  Heading
+  Heading,
+  Image,
+  Link
 } from '@chakra-ui/react'
 
 
@@ -46,6 +48,7 @@ const NavLink = (props) => {
 export default function Nav(props) {
   const { colorMode, toggleColorMode } = useColorMode()
   const { isOpen, onOpen, onClose } = useDisclosure()
+
   const handleBookMarks =()=> {
     props.handleBookMarks();
   }
@@ -53,6 +56,7 @@ export default function Nav(props) {
     console.log("logged out")
     props.handleLogout();
   }
+  
   return (
     <>
       <Box color={"black"} mb={5}  bg={"green.300"} px={4}>
@@ -61,6 +65,9 @@ export default function Nav(props) {
 
           <Flex alignItems={'center'}>
             <Stack direction={'row'} spacing={7}>
+            <Button onClick={toggleColorMode}>
+                {colorMode === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
+            </Button>
 
               <Menu>
                 <MenuButton
