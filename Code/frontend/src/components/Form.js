@@ -206,7 +206,7 @@ class Form extends Component {
 
               {/* <Input type="text" id="cuisine" color={"gray.500"} size={"lg"} placeholder='Cuisine' /> */}
             </InputGroup>
-            <InputGroup variant={"filled"}>
+            {/*<InputGroup variant={"filled"}>
                 <Input
                   type="number"
                   id="cookingTime"
@@ -216,7 +216,7 @@ class Form extends Component {
                   onChange={this.handleCookingTimeChange}
                   placeholder="Max Cooking Time"
                 />
-            </InputGroup>
+            </InputGroup>*/}
             <InputGroup variant={"filled"}>
               {/* <InputLeftElement pointerEvents='none'>
                             <FontAwesomeIcon size="lg" icon={faClock} />
