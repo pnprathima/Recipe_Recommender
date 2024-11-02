@@ -55,7 +55,7 @@ export default function Nav(props) {
   }
   return (
     <>
-      <Box color={"black"} mb={5}  bg={"green.300"} px={4}>
+      <Box color={"black"} mb={5}  bg={"purple"} px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
           <Box pl={10}><Heading size={"md"}>Saveurs Sélection</Heading></Box>
 
