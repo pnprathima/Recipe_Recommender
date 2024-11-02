@@ -28,6 +28,7 @@ const RecipeCard = (props) => {
                     <Heading data-testid="recipeName" size='md'>{props.recipe.TranslatedRecipeName}</Heading>
                 </CardHeader>
                 <CardBody>
+                <Text data-testid="time">Cooking Time: {props.recipe.TotalTimeInMins} mins </Text>
                     <Text data-testid="time">Cooking Time: {props.recipe.TotalTimeInMins} mins</Text>
                     <Text data-testid="rating">Rating: {props.recipe['Recipe-rating']}</Text>
                     <Text data-testid="diet">Diet Type: {props.recipe['Diet-type']}</Text>

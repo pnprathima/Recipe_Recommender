@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Avatar, Flex, Modal, ModalBody, ModalCloseButton, ModalOverlay, ModalHeader, ModalFooter, ModalContent, Box, SimpleGrid, Text, Button } from "@chakra-ui/react"
+import { Avatar, Flex,Input, Modal, ModalBody, ModalCloseButton, ModalOverlay, ModalHeader, ModalFooter, ModalContent, Box, SimpleGrid, Text, Button } from "@chakra-ui/react"
 import RecipeCard from "./RecipeCard";
 
 // component to handle all the recipes
@@ -14,6 +14,7 @@ const RecipeList = ({ recipes }) => {
   console.log(recipes)
   const [isOpen, setIsOpen] = useState(false);
   const [currentRecipe, setCurrentRecipe] = useState({});
+  const [cookingTimeFilter, setCookingTimeFilter] = useState("");
   var youtube_videos =
     "https://www.youtube.com/results?search_query=" +
     currentRecipe["TranslatedRecipeName"];
@@ -25,14 +26,31 @@ const RecipeList = ({ recipes }) => {
   const onClose = () => {
     setIsOpen(false)
   }
+  const handleCookingTimeFilterChange = (event) => {
+    setCookingTimeFilter(event.target.value);
+  };
+
+  const filterRecipesByCookingTime = (recipes) => {
+    if (!cookingTimeFilter) return recipes;
+    return recipes.filter(recipe => parseInt(recipe.TotalTimeInMins) <= parseInt(cookingTimeFilter));
+  };
   // all the recipes are being returned in the form of a table
   return (
     <>
       <Box borderRadius={"lg"} border="1px" boxShadow={"10px"} borderColor={"gray.100"} fontFamily="regular" m={10} width={"70%"} p={5}>
+        <Box mb={4}>
+          <Text mb={2}>Filter by Cooking Time (minutes):</Text>
+          <Input
+            type="number"
+            value={cookingTimeFilter}
+            onChange={handleCookingTimeFilterChange}
+            placeholder="Max cooking time"
+          />
+        </Box>
         <SimpleGrid spacing={5} templateColumns='repeat(auto-fill, minmax(250px, 1fr))'>
-          {recipes.length !==0 ? recipes.map((recipe) => (
-            <RecipeCard handler={handleViewRecipe} recipe={recipe} />
-          )) : <Text data-testid="noResponseText" fontSize={"lg"} color={"gray"}>Searching for a recipe?</Text>}
+          {filterRecipesByCookingTime(recipes).length !== 0 ? filterRecipesByCookingTime(recipes).map((recipe) => (
+            <RecipeCard key={recipe._id} handler={handleViewRecipe} recipe={recipe} />
+          )) : <Text data-testid="noResponseText" fontSize={"lg"} color={"gray"}>No recipes found matching the criteria.</Text>}
         </SimpleGrid>
       </Box>
       <Modal size={"6xl"} isOpen={isOpen} onClose={onClose}>
