@@ -25,6 +25,7 @@ class App extends Component {
       recipeList: [],
       recipeByNameList: [],
       email: "",
+      cookingTime: "",
       flag: false,
       isLoading: false,
       isLoggedIn: false,
@@ -105,6 +106,7 @@ class App extends Component {
       ingredients: formDict["ingredient"],
       cuisine: formDict["cuisine"],
       email: formDict["email_id"],
+      cookingTime: formDict["cooking_time"],
       flag: formDict["flag"],
     });
 
@@ -112,17 +114,19 @@ class App extends Component {
     const flag = formDict["flag"];
     const items = Array.from(formDict["ingredient"]);
     const cuis = formDict["cuisine"];
-    this.getRecipeDetails(items, cuis, mail, flag);
+    const cookingTime = formDict["cooking_time"];
+    this.getRecipeDetails(items, cuis, mail, flag, cookingTime);
     //  alert(typeof(ingredientsInput["cuisine"]));
   };
 
-  handleRecipesByName = (recipeName) => {
+  handleRecipesByName = (recipeName, cookingTime) => {
     this.setState({
       isLoading: true
     })
     recipeDB.get("/recipes/getRecipeByName", {
       params: {
-        recipeName: recipeName
+        recipeName: recipeName,
+        TotalTimeInMins: cookingTime
       }
     }).then(res => {
       console.log(res.data);
@@ -133,7 +137,7 @@ class App extends Component {
     })
   }
 
-  getRecipeDetails = async (ingredient, cuis, mail, flag) => {
+  getRecipeDetails = async (ingredient, cuis, mail, flag, cookingTime) => {
     try {
       const response = await recipeDB.get("/recipes", {
         params: {
@@ -141,6 +145,7 @@ class App extends Component {
           Cuisine: cuis,
           Email: mail,
           Flag: flag,
+          TotalTimeInMins: cookingTime
         },
       });
       this.setState({

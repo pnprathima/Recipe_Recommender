@@ -16,6 +16,7 @@ class Form extends Component {
       ingredients: new Set(),
       cuisineState: 0,
       cuisine: "",
+      cookingTime: "",
     };
   }
 
@@ -64,7 +65,9 @@ class Form extends Component {
         )
     }*/
 
-  
+  handleCookingTimeChange = (event) => {
+    this.setState({ cookingTime: event.target.value });
+  };
 
   // function to display the ingredients added by the user upto that point.
   printHander = () => {
@@ -152,11 +155,13 @@ class Form extends Component {
     dict["cuisine"] = document.getElementById("cuisine").value;
     dict["email_id"] = document.getElementById("email_id").value;
     dict["flag"] = document.getElementById("Send_email").checked;
+    dict["cookingTime"] = this.state.cookingTime;
     //this.props.sendFormData(this.state.cuisine, this.state.numberIngredients,this.state.ingredients)
     this.props.sendFormData(dict);
     console.log(dict);
     document.getElementById("cuisine").value = "";
     document.getElementById("email_id").value = "";
+    this.setState({ cookingTime: "" }); 
   };
 
   
@@ -200,6 +205,17 @@ class Form extends Component {
               <TypeAheadDropDown  iteams={this.state.cuisine_list} placeholder_inp = {'Cuisine'} id_inp={'cuisine'} />
 
               {/* <Input type="text" id="cuisine" color={"gray.500"} size={"lg"} placeholder='Cuisine' /> */}
+            </InputGroup>
+            <InputGroup variant={"filled"}>
+                <Input
+                  type="number"
+                  id="cookingTime"
+                  color={"gray.500"}
+                  size={"lg"}
+                  value={this.state.cookingTime}
+                  onChange={this.handleCookingTimeChange}
+                  placeholder="Max Cooking Time"
+                />
             </InputGroup>
             <InputGroup variant={"filled"}>
               {/* <InputLeftElement pointerEvents='none'>

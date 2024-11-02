@@ -81,6 +81,11 @@ export default class RecipesController {
       filters.Email = req.query.Email;
       filters.Flag = req.query.Flag;
     }
+    
+    // New filter for TotalTimeInMins
+    if (req.query.TotalTimeInMins) {
+      filters.TotalTimeInMins = parseInt(req.query.TotalTimeInMins, 10); // Ensure it's an integer
+  }
 
     const { recipesList, totalNumRecipes } = await RecipesDAO.getRecipes({
       filters,

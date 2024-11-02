@@ -130,6 +130,14 @@ export default class RecipesDAO {
         console.log(email);
         console.log(flagger);
       }
+        
+    if ("Cuisine" in filters) {
+      query["Cuisine"] = filters["Cuisine"];
+    }
+
+    if ("TotalTimeInMins" in filters) {
+      query["TotalTimeInMins"] = { $lte: parseInt(filters["TotalTimeInMins"]) }; // Less than or equal to
+    }
     }
 
     let cursor;
