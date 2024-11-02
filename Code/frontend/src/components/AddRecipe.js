@@ -106,7 +106,7 @@ const AddRecipe = () => {
         const ingredientList = recipe.ingredients;
 
         var ingredient_list = ingredientList.map((ingredient) =>
-            <Badge id={ingredient} m={1} _hover={{cursor: "pointer"}} onClick={ingredientRemoveHandler} colorScheme="green">
+            <Badge id={ingredient} m={1} _hover={{cursor: "pointer"}} onClick={ingredientRemoveHandler} colorScheme="purple">
                 {ingredient}
             </Badge>
         );
@@ -133,7 +133,7 @@ const AddRecipe = () => {
         const restaurantList = recipe.restaurants;
 
         const restaurant_list = restaurantList.map((restaurant) =>
-            <Badge id={restaurant} m={1} _hover={{cursor: "pointer"}} onClick={restaurantRemoveHandler} colorScheme="green">
+            <Badge id={restaurant} m={1} _hover={{cursor: "pointer"}} onClick={restaurantRemoveHandler} colorScheme="purple">
                 {restaurant}
             </Badge>
         );
@@ -160,7 +160,7 @@ const AddRecipe = () => {
         const locationList = recipe.locations;
 
         const location_list = locationList.map((location) =>
-            <Badge id={location} m={1} _hover={{cursor: "pointer"}} onClick={locationRemoveHandler} colorScheme="green">
+            <Badge id={location} m={1} _hover={{cursor: "pointer"}} onClick={locationRemoveHandler} colorScheme="purple">
                 {location}
             </Badge>
         );
@@ -202,26 +202,26 @@ const AddRecipe = () => {
                     <HStack direction="row">
                         <InputGroup variant={"filled"}>
                         <Input type={"text"} marginEnd={"5px"} id="ingredients" placeholder={"Ingredients"} width={"45%"}/>
-                        <Button mr={10} width={"5%"} onClick={addIngredient} id="addIngredientButton" _hover={{ bg: 'black', color: "gray.100" }} color={"gray.600"} bg={"green.300"}>Add</Button>
+                        <Button mr={10} width={"5%"} onClick={addIngredient} id="addIngredientButton" _hover={{ bg: 'black', color: "gray.100" }} color={"gray.600"} bg={"purple.300"}>Add</Button>
                         </InputGroup>
                         {ingredientPrintHandler()}
                     </HStack>
                     <HStack spacing={'5'} alignItems={"flex-start"} >
                         <InputGroup variant={"filled"}>
                             <Input type="text" marginEnd={"5px"} id="restaurant" placeholder={"Restaurannt"} width="45%"/>
-                            <Button id="restaurantButton" width="5%" mr={10} onClick={addRestaurant} _hover={{ bg: 'black', color: "gray.100" }} color={"gray.600"} bg={"green.300"}>Add</Button>
+                            <Button id="restaurantButton" width="5%" mr={10} onClick={addRestaurant} _hover={{ bg: 'black', color: "gray.100" }} color={"gray.600"} bg={"purple.300"}>Add</Button>
                             {restaurantPrintHandler()}
                         </InputGroup>  
                     </HStack> 
                     <HStack spacing={'5'} alignItems={"flex-start"} >
                         <InputGroup variant={"filled"}>
                             <Input type="text" marginEnd={"5px"} id="location" placeholder={"Restaurant-Location"} width="45%" />
-                            <Button id="locationButton" width="5%" mr={10} onClick={addLocation} _hover={{ bg: 'black', color: "gray.100" }} color={"gray.600"} bg={"green.300"}>Add</Button>
+                            <Button id="locationButton" width="5%" mr={10} onClick={addLocation} _hover={{ bg: 'black', color: "gray.100" }} color={"gray.600"} bg={"purple.300"}>Add</Button>
                             {locationPrintHandler()}
                         </InputGroup>  
                     </HStack> 
                     <Textarea onChange = {handleChange} id="instructions" placeholder={"Write Cooking Instructions Here"} />
-                    <Button width={"30%"} m={'auto'} id="addRecipeButton" onClick={addRecipe} _hover={{ bg: 'black', color: "gray.100" }} color={"gray.600"} bg={"green.300"}>Add Recipe</Button>
+                    <Button width={"30%"} m={'auto'} id="addRecipeButton" onClick={addRecipe} _hover={{ bg: 'black', color: "gray.100" }} color={"gray.600"} bg={"purple.300"}>Add Recipe</Button>
                 </VStack>
             </Box>
         </>

@@ -39,7 +39,7 @@ const RecipeCard = (props) => {
                     objectFit='cover'
                     src={props.recipe["image-url"]}
                     width={"90%"}
-                    height={"40%"}
+                    height={"50%"}
                     m={"auto"}
                     mb="2"
                 />

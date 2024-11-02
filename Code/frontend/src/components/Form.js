@@ -76,7 +76,7 @@ class Form extends Component {
 
     // mapping each item to be displayed as a list item
     const list_items = items.map((item) => (
-      <Badge id={item} m={1} _hover={{cursor: "pointer"}} onClick={this.removeHandler} colorScheme="green">
+      <Badge id={item} m={1} _hover={{cursor: "pointer"}} onClick={this.removeHandler} colorScheme="purple">
         {item}
       </Badge>
     ));
@@ -235,7 +235,7 @@ class Form extends Component {
                 </FormLabel>
               </InputGroup>
 
-            <Button data-testid="submit" id="submit" onClick={this.handleSubmit} width={"100%"} _hover={{ bg: 'black', color: "gray.100" }} color={"gray.600"} bg={"green.300"}>Search Recipes</Button>
+            <Button data-testid="submit" id="submit" onClick={this.handleSubmit} width={"100%"} _hover={{ bg: 'purple.700', color: "white" }} color={"white"} bg={"purple.700"}>Search Recipes</Button>
 
           </VStack>
         </Box>

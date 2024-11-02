@@ -173,7 +173,7 @@ class App extends Component {
             {this.state.isProfileView ?
             <UserProfile handleProfileView={this.handleProfileView} user={this.state.userData} />
             :
-              <Tabs variant='soft-rounded' colorScheme='green'>
+              <Tabs variant='soft-rounded' colorScheme='purple'>
                 <TabList ml={10}>
                   <Tab>Search Recipe</Tab>
                   <Tab>Add Recipe</Tab>
