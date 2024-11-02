@@ -171,8 +171,6 @@ Please see our [CONTRIBUTING.md](https://github.com/pnprathima/Recipe_Recommende
 
 ## FUTURE SCOPE
 
-Implement personalized diertary requirements based filtering.
-
 Meal planning- saving data for all meals of the day.
 
 Voice to text integration. 
@@ -181,17 +179,12 @@ Chatbot integration- to answer quick queries about the recipe.
 
 ## Team Members
 
-Annadurai,Harshitha <br>
-Bhoja Ramamanohara,Pannaga Rao <br>
-Masineni Prasanna Kumar,Karthik <br>
-Niranjana,Prathima Putreddy <br>
+Tejas Desai <br>
+Kaustubh Sonnawane <br>
+Nikita Chuadhari <br>
 
-## Troubleshooting and Support
-Common issues observed and solutions:<br>
-1. requirements.txt failing: this issue should no longer be seen, as we have used ~= to ensure your systems pick up versions compatible with the other packages. However, if you happen to see the issue, modify the requirements.txt file to use a more recent version.
-2. python was not found: we recommend using python3 as some of the modules are available only on Python3. You may either install Python3 or setup a virtual environment(we suggest the latter if you are currently running other applications on python2)
-Facing other issues with the application? Mail us - [teamsoftwareeng7@gmail.com](teamsoftwareeng7@gmail.com)
+## New Features
 
-
+Implemented personalized diertary requirements based filtering.
 
 <p align="center">Made with ❤️ on GitHub.</p>
