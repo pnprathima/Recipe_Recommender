@@ -20,7 +20,7 @@
     "express": "^4.17.1",
     "mongodb": "^4.1.2",
     "nodemailer": "^6.7.0",
-    "nodemon": "^2.0.13"
+    "nodemon": "^3.1.7"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
