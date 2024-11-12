@@ -50,18 +50,17 @@ const RecipeList = ({ recipes }) => {
 
   const filterRecipesByCookingTime = (recipes) => {
     if (!cookingTimeFilter) return recipes;
-    return recipes.filter(
-      (recipe) =>
-        parseInt(recipe.TotalTimeInMins) <= parseInt(cookingTimeFilter)
-    );
+    return recipes.filter(recipe => parseInt(recipe.TotalTimeInMins) <= parseInt(cookingTimeFilter));
   };
 
+  // Function to filter recipes by diet type
   const filterRecipesByDietType = (recipes) => {
     if (!dietTypeFilter) return recipes;
-    return recipes.filter(
-      (recipe) => recipe["Diet-type"] === dietTypeFilter
-    );
+    return recipes.filter((recipe) => recipe["Diet-type"] === dietTypeFilter);
   };
+
+  // Apply both filters (cooking time and diet type)
+  //const filteredRecipes = filterRecipesByDietType(filterRecipesByCookingTime(recipes));
 
   // all the recipes are being returned in the form of a table
   const filteredRecipes = filterRecipesByCookingTime(recipes);
@@ -88,29 +87,21 @@ const RecipeList = ({ recipes }) => {
             placeholder="Max cooking time"
           />
         </Box>
+        {/* Diet Type Filter */}
         <Box mb={4}>
           <Text mb={2}>Filter by Diet Type:</Text>
-          <Select
-            placeholder="Select diet type"
+          <Input
+            type="text"
             value={dietTypeFilter}
             onChange={handleDietTypeFilterChange}
-          >
-            <option value="Vegan">Vegan</option>
-            <option value="Vegetarian">Vegetarian</option>
-            <option value="Non-Vegetarian">Non-Vegetarian</option>
-          </Select>
+            placeholder="Enter diet type (e.g., Vegan)"
+          />
         </Box>
-        <SimpleGrid
-          spacing={5}
-          templateColumns="repeat(auto-fill, minmax(250px, 1fr))"
-        >
+
+        <SimpleGrid spacing={5} templateColumns="repeat(auto-fill, minmax(250px, 1fr))">
           {finalFilteredRecipes.length !== 0 ? (
             finalFilteredRecipes.map((recipe) => (
-              <RecipeCard
-                key={recipe._id}
-                handler={handleViewRecipe}
-                recipe={recipe}
-              />
+              <RecipeCard key={recipe._id} handler={handleViewRecipe} recipe={recipe} />
             ))
           ) : (
             <Text data-testid="noResponseText" fontSize={"lg"} color={"gray"}>
@@ -118,6 +109,9 @@ const RecipeList = ({ recipes }) => {
             </Text>
           )}
         </SimpleGrid>
+
+
+        
       </Box>
       <Modal size={"6xl"} isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

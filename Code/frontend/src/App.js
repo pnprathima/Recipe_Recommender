@@ -214,11 +214,15 @@ class App extends Component {
             )}
           </>
         ) : (
-          <Login
-            handleSignup={this.handleSignup}
-            handleLogin={this.handleLogin}
-          />
+          (<Login handleSignup={this.handleSignup} handleLogin={this.handleLogin} />)
         )}
+        {/* handleSubmit function is being sent as a prop to the form component*/}
+
+
+        {/* RecipeList is the component where results are displayed.
+        App's recipeList state item is being sent as a prop
+        */}
+
       </div>
     );
   }
