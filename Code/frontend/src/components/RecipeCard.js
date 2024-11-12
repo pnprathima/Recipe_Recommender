@@ -23,22 +23,23 @@ const RecipeCard = (props) => {
     }
     return (
         <>
-            <Card data-testid="recipeCard" _hover={{transform: "scale(1.05)", bg: "green.300", transitionDuration: "4" ,cursor: "pointer"}}>
+            <Card data-testid="recipeCard" _hover={{transform: "scale(1.05)", bg: "purple.100", transitionDuration: "4" ,cursor: "pointer"}}>
                 <CardHeader onClick={handleClick}>
                     <Heading data-testid="recipeName" size='md'>{props.recipe.TranslatedRecipeName}</Heading>
                 </CardHeader>
                 <CardBody>
+                <Text data-testid="time">Cooking Time: {props.recipe.TotalTimeInMins} mins </Text>
                     <Text data-testid="time">Cooking Time: {props.recipe.TotalTimeInMins} mins</Text>
                     <Text data-testid="rating">Rating: {props.recipe['Recipe-rating']}</Text>
                     <Text data-testid="diet">Diet Type: {props.recipe['Diet-type']}</Text>
-                    <Tag onClick={handleSave} _hover={{bg: "white"}} ml={"160px"} bg={"gray.300"}>save recipe</Tag>
+                    <Tag onClick={handleSave} _hover={{bg: "purple.700"}} ml={"160px"} bg={"purple.400"}>save recipe</Tag>
                 </CardBody>
                 <Image
                     data-testid="recipeImg"
                     objectFit='cover'
                     src={props.recipe["image-url"]}
                     width={"90%"}
-                    height={"40%"}
+                    height={"50%"}
                     m={"auto"}
                     mb="2"
                 />

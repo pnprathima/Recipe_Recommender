@@ -8,15 +8,20 @@ import recipeDB from "../apis/recipeDB";
 
 const SearchByRecipe = (props) => {
     const [recipeName, setRecipeName] = useState("");
+    const [cookingTime, setCookingTime] = useState("");
     const [recipes, setRecipes] = useState([])
     const handleNameChange = (e) => {
         e.preventDefault();
         setRecipeName(e.target.value)
     }
+    const handleCookingTimeChange = (e) => {
+        e.preventDefault();
+        setCookingTime(e.target.value);
+    }
     const handleSearchByRecipeClick = (e) => {
         e.preventDefault();
         // console.log(recipeName)
-        props.sendRecipeData(recipeName)
+        props.sendRecipeData(recipeName, cookingTime)
     }
     return (
         <>
@@ -27,6 +32,13 @@ const SearchByRecipe = (props) => {
                         placeholder='Enter Recipe Name'
                         onChange={handleNameChange}
                     />
+                    <InputGroup size='md'>
+                        <Input
+                            type="number"
+                            placeholder='Max Cooking Time (mins)'
+                            onChange={handleCookingTimeChange}
+                        />
+                    </InputGroup>
                     <InputRightElement width='4.5rem'>
                         <Button h='1.75rem' size='sm' onClick={handleSearchByRecipeClick}>
                             Search

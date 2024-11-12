@@ -1,4 +1,3 @@
-//  
 import Form from "./components/Form.js";
 import Header from "./components/Header";
 import recipeDB from "./apis/recipeDB";
@@ -20,120 +19,125 @@ class App extends Component {
 
     this.state = {
       cuisine: "",
-      //NoIngredients : 0,
       ingredients: new Set(),
       recipeList: [],
       recipeByNameList: [],
       email: "",
+      cookingTime: "",
       flag: false,
       isLoading: false,
       isLoggedIn: false,
       isProfileView: false,
-      userData: {}
+      userData: {},
+      dietType: "", // Added state for diet type
     };
   }
 
-  handleBookMarks = ()=> {
+  handleBookMarks = () => {
     this.setState({
-      isProfileView: true
-    })
-  }
+      isProfileView: true,
+    });
+  };
 
-  handleProfileView = ()=> {
+  handleProfileView = () => {
     this.setState({
-      isProfileView: false
-    })
-  }
+      isProfileView: false,
+    });
+  };
 
-  handleSignup = async (userName, password)=> {
+  handleSignup = async (userName, password) => {
     try {
       const response = await recipeDB.post("/recipes/signup", {
-          userName,
-          password
+        userName,
+        password,
       });
-      console.log(response.data)
+      console.log(response.data);
       if (response.data.success) {
-        alert("Successfully Signed up!")
+        alert("Successfully Signed up!");
         this.setState({
           isLoggedIn: true,
-          userData: response.data.user
-        })
-        localStorage.setItem("userName", response.data.user.userName)
-        console.log(response.data.user)
+          userData: response.data.user,
+        });
+        localStorage.setItem("userName", response.data.user.userName);
+        console.log(response.data.user);
       } else {
-        alert("User already exists")
+        alert("User already exists");
       }
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   handleLogin = async (userName, password) => {
     try {
       const response = await recipeDB.get("/recipes/login", {
         params: {
           userName,
-          password
+          password,
         },
       });
-      console.log(response.data)
+      console.log(response.data);
       if (response.data.success) {
         this.setState({
           isLoggedIn: true,
-          userData: response.data.user
-        })
-        localStorage.setItem("userName", response.data.user.userName)
-        console.log(response.data.user)
-        alert("Successfully logged in!")
+          userData: response.data.user,
+        });
+        localStorage.setItem("userName", response.data.user.userName);
+        console.log(response.data.user);
+        alert("Successfully logged in!");
       } else {
-        console.log("Credentials are incorrect")
+        console.log("Credentials are incorrect");
       }
     } catch (err) {
       console.log(err);
     }
-  }
+  };
 
   // Function to get the user input from the Form component on Submit action
   handleSubmit = async (formDict) => {
     this.setState({
-      isLoading: true
-    })
-    console.log(formDict)
+      isLoading: true,
+    });
+    console.log(formDict);
     this.setState({
-      // cuisine: cuisineInput,
-      //NoIngredients: noIngredientsInput,
       ingredients: formDict["ingredient"],
       cuisine: formDict["cuisine"],
       email: formDict["email_id"],
+      cookingTime: formDict["cooking_time"],
       flag: formDict["flag"],
+      dietType: formDict["diet_type"], // Update for diet type
     });
 
     const mail = formDict["email_id"];
     const flag = formDict["flag"];
     const items = Array.from(formDict["ingredient"]);
     const cuis = formDict["cuisine"];
-    this.getRecipeDetails(items, cuis, mail, flag);
-    //  alert(typeof(ingredientsInput["cuisine"]));
+    const cookingTime = formDict["cooking_time"];
+    const dietType = formDict["diet_type"]; // Update for diet type
+    this.getRecipeDetails(items, cuis, mail, flag, cookingTime, dietType); // Update to include diet type
   };
 
-  handleRecipesByName = (recipeName) => {
+  handleRecipesByName = (recipeName, cookingTime) => {
     this.setState({
-      isLoading: true
-    })
-    recipeDB.get("/recipes/getRecipeByName", {
-      params: {
-        recipeName: recipeName
-      }
-    }).then(res => {
-      console.log(res.data);
-      this.setState({
-        recipeByNameList: res.data.recipes,
-        isLoading: false
+      isLoading: true,
+    });
+    recipeDB
+      .get("/recipes/getRecipeByName", {
+        params: {
+          recipeName: recipeName,
+          TotalTimeInMins: cookingTime,
+        },
       })
-    })
-  }
+      .then((res) => {
+        console.log(res.data);
+        this.setState({
+          recipeByNameList: res.data.recipes,
+          isLoading: false,
+        });
+      });
+  };
 
-  getRecipeDetails = async (ingredient, cuis, mail, flag) => {
+  getRecipeDetails = async (ingredient, cuis, mail, flag, cookingTime, dietType) => { // Update to include diet type
     try {
       const response = await recipeDB.get("/recipes", {
         params: {
@@ -141,34 +145,43 @@ class App extends Component {
           Cuisine: cuis,
           Email: mail,
           Flag: flag,
+          TotalTimeInMins: cookingTime,
+          DietType: dietType, // Pass the diet type to the request
         },
       });
       this.setState({
         recipeList: response.data.recipes,
-        isLoading: false
+        isLoading: false,
       });
     } catch (err) {
       console.log(err);
     }
   };
 
-  handleLogout = ()=> {
-    console.log("logged out")
+  handleLogout = () => {
+    console.log("logged out");
     this.setState({
-      isLoggedIn: false
-    })
-  }
+      isLoggedIn: false,
+    });
+  };
 
   render() {
     return (
       <div>
-        <Nav handleLogout={this.handleLogout} handleBookMarks={this.handleBookMarks} user={this.state.userData}/>
-        {this.state.isLoggedIn ?
+        <Nav
+          handleLogout={this.handleLogout}
+          handleBookMarks={this.handleBookMarks}
+          user={this.state.userData}
+        />
+        {this.state.isLoggedIn ? (
           <>
-            {this.state.isProfileView ?
-            <UserProfile handleProfileView={this.handleProfileView} user={this.state.userData} />
-            :
-              <Tabs variant='soft-rounded' colorScheme='green'>
+            {this.state.isProfileView ? (
+              <UserProfile
+                handleProfileView={this.handleProfileView}
+                user={this.state.userData}
+              />
+            ) : (
+              <Tabs variant="soft-rounded" colorScheme="purple">
                 <TabList ml={10}>
                   <Tab>Search Recipe</Tab>
                   <Tab>Add Recipe</Tab>
@@ -178,7 +191,11 @@ class App extends Component {
                   <TabPanel>
                     <Box display="flex">
                       <Form sendFormData={this.handleSubmit} />
-                      {this.state.isLoading ? <RecipeLoading /> : <RecipeList recipes={this.state.recipeList} />}
+                      {this.state.isLoading ? (
+                        <RecipeLoading />
+                      ) : (
+                        <RecipeList recipes={this.state.recipeList} />
+                      )}
                     </Box>
                   </TabPanel>
                   <TabPanel>
@@ -186,14 +203,19 @@ class App extends Component {
                   </TabPanel>
                   <TabPanel>
                     <SearchByRecipe sendRecipeData={this.handleRecipesByName} />
-                    {this.state.isLoading ? <RecipeLoading /> : <RecipeList recipes={this.state.recipeByNameList} />}
+                    {this.state.isLoading ? (
+                      <RecipeLoading />
+                    ) : (
+                      <RecipeList recipes={this.state.recipeByNameList} />
+                    )}
                   </TabPanel>
                 </TabPanels>
               </Tabs>
-            }
+            )}
           </>
-          : <Login handleSignup={this.handleSignup} handleLogin={this.handleLogin} />
-        }
+        ) : (
+          (<Login handleSignup={this.handleSignup} handleLogin={this.handleLogin} />)
+        )}
         {/* handleSubmit function is being sent as a prop to the form component*/}
 
 

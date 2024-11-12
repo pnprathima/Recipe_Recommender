@@ -16,7 +16,9 @@ import {
   Stack,
   useColorMode,
   Center,
-  Heading
+  Heading,
+  Image,
+  Link
 } from '@chakra-ui/react'
 
 
@@ -46,6 +48,7 @@ const NavLink = (props) => {
 export default function Nav(props) {
   const { colorMode, toggleColorMode } = useColorMode()
   const { isOpen, onOpen, onClose } = useDisclosure()
+
   const handleBookMarks =()=> {
     props.handleBookMarks();
   }
@@ -53,14 +56,21 @@ export default function Nav(props) {
     console.log("logged out")
     props.handleLogout();
   }
+  
   return (
     <>
-      <Box color={"black"} mb={5}  bg={"green.300"} px={4}>
+      <Box color={"black"} mb={5}  bg={"purple"} px={5}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-          <Box pl={10}><Heading size={"md"}>Saveurs Sélection</Heading></Box>
+        <Link href="/" pl={10}> {/* Link to your homepage */}
+            <Image src="/newlogo.png" alt="Logo" boxSize="50px" />
+          </Link>
+          <Box pl={10}><Heading size={"md"} color={"white"}>Saveurs Sélection</Heading></Box>
 
           <Flex alignItems={'center'}>
             <Stack direction={'row'} spacing={7}>
+            <Button onClick={toggleColorMode}>
+                {colorMode === 'light' ? 'Switch to Dark Mode' : 'Switch to Light Mode'}
+            </Button>
 
               <Menu>
                 <MenuButton
@@ -71,7 +81,7 @@ export default function Nav(props) {
                   minW={0}>
                   <Avatar
                     size={'sm'}
-                    src={'https://avatars.dicebear.com/api/male/username.svg'}
+                    src={'https://i.redd.it/fcy75bgri5u41.jpg'}
                   />
                 </MenuButton>
                 <MenuList alignItems={'center'}>
@@ -79,7 +89,7 @@ export default function Nav(props) {
                   <Center>
                     <Avatar
                       size={'xl'}
-                      src={'https://avatars.dicebear.com/api/male/username.svg'}
+                      src={'https://i.redd.it/fcy75bgri5u41.jpg'}
                     />
                   </Center>
                   <br />
